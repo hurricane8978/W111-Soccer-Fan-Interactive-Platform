@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>an interactive platform for soccer fans or potential fans</title>
+    <link rel="stylesheet" href="layui-2.6.5/src/css/layui.css">
+    <script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script src="layui-2.6.5/src/layui.js" charset="utf-8"></script>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        {% include "fans_menu.html"  %}
+		
+		<h3 style="width:80%;margin-left:10%;margin-top:40px;">Please select the teams you want to vote.</h3>
+		<hr class="layui-border-cyan" style="width:80%;margin-left:10%;">
+		
+        <div class="layui-form" style="width:80%;margin-left:10%;">
+            <table class="layui-table" lay-skin="nob">
+                <tbody>
+
+                    <tr><td><input type="checkbox" name="team[German]" lay-skin="primary" title="German" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Qatar]" lay-skin="primary" title="Qatar" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[German]" lay-skin="primary" title="German" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Denmark]" lay-skin="primary" title="Denmark" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[France]" lay-skin="primary" title="France" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Spain]" lay-skin="primary" title="Spain" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[England]" lay-skin="primary" title="England" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Croatia]" lay-skin="primary" title="Croatia" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Belgium]" lay-skin="primary" title="Belgium" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Netherlands]" lay-skin="primary" title="Netherlands" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Serbia]" lay-skin="primary" title="Serbia" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Switzerland]" lay-skin="primary" title="Switzerland" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Wales]" lay-skin="primary" title="Wales" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Poland]" lay-skin="primary" title="Poland" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Canada]" lay-skin="primary" title="Canada" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Portugal]" lay-skin="primary" title="Portugal" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Mexico]" lay-skin="primary" title="Mexico" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[the United States]" lay-skin="primary" title="the United States" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Costa Rica]" lay-skin="primary" title="Costa Rica" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Japan]" lay-skin="primary" title="Japan" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[South Korea]" lay-skin="primary" title="South Korea" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Iran]" lay-skin="primary" title="Iran" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Saudi Arabia]" lay-skin="primary" title="Saudi Arabia" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Australia]" lay-skin="primary" title="Australia" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[ Senegal]" lay-skin="primary" title=" Senegal" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Morocco]" lay-skin="primary" title="Morocco" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Tunisia]" lay-skin="primary" title="Tunisia" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Cameroon]" lay-skin="primary" title="Cameroon" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Ghana]" lay-skin="primary" title="Ghana" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Brazil]" lay-skin="primary" title="Brazil" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Argentina]" lay-skin="primary" title="Argentina" checked=""></td></tr>
+					<tr><td><input type="checkbox" name="team[Uruguay and Ecuador]" lay-skin="primary" title="Uruguay and Ecuador" checked=""></td></tr>
+					
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+		layui.use('form', function () {
+            var form = layui.form
+            form.render();
+        });
+    </script>
+</body>
+</html>

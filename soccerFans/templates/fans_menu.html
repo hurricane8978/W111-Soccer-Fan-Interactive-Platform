@@ -1,0 +1,61 @@
+<ul class="layui-nav layui-bg-green">
+    <li class="layui-nav-item"><a href="/">Home</a></li>
+	
+	
+
+	
+	{% if session['user_id'] == 0  %}
+	<li class="layui-nav-item"><a href="javascript:void(0);">Events</a>
+		<dl class="layui-nav-child">
+            <dd><a href="eventList">EventsList</a></dd>
+        </dl>
+	</li>
+	<li class="layui-nav-item"><a href="aboutUs">About Us</a></li>
+	<li>
+        <ul class="layui-nav layui-bg-green layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="fansLogin">Login
+                </a>
+            </li>
+        </ul>
+    </li>
+
+	{% else %}
+	<li class="layui-nav-item"><a href="javascript:void(0);">Events</a>
+		<dl class="layui-nav-child">
+            <dd><a href="eventsManagement">EventsManagement</a></dd>
+            <dd><a href="eventList">EventsList</a></dd>
+        </dl>
+	</li>
+	
+    <li class="layui-nav-item"><a href="javascript:void(0);">Posts</a>
+		<dl class="layui-nav-child">
+            <dd><a href="myPost">My Post</a></dd>
+            <dd><a href="postList">PostList</a></dd>
+        </dl>
+	</li>
+	<li class="layui-nav-item"><a href="vote">Vote</a></li>
+    <li class="layui-nav-item"><a href="comments">Comments</a></li>
+	<li class="layui-nav-item"><a href="javascript:void(0);">Follows</a>
+		<dl class="layui-nav-child">
+            <dd><a href="myPost">User List</a></dd>
+            <dd><a href="follows">My Follows</a></dd>
+        </dl>
+	</li>
+	<li class="layui-nav-item"><a href="aboutUs">About Us</a></li>
+    <li>
+        <ul class="layui-nav layui-bg-green layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:void(0);">
+                    {{session['name']}}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="userinfo">profile</a></dd>
+                    <dd><a href="quit">quit</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </li>
+	{%endif%}
+	
+</ul>
