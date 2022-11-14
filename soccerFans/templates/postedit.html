@@ -12,17 +12,22 @@
         {% include "fans_menu.html"  %}
 
         <div class="container-fluid">
-  <form action="{{ url_for('edit', post_id=post_id) }}" method="post">
-    {{ form.csrf_token }}
-    <div class="row">
-      <h3>Edit Task</h3>
-      <div class="col">
-        {{ form.title(class="form-control") }}
+  <form action="{{ url_for('postEdit', post_id=post_id) }}" method="post">
+      {{ form.csrf_token }}
+      <div class="row">
+          <h3>Edit Post</h3>
+          <div class="col">
+              <label for="posttitle" class="form-label">Post Title</label>
+              {{ form.title(class="form-control") }}
+          </div>
+          <div class="col">
+              <label for="textarea" class="form-label">Post Content</label>
+              {{ form.post(class="form-control") }}
+          </div>
+          <div class="col">
+              {{ form.submit(class="btn btn-primary") }}
+          </div>
       </div>
-      <div class="col">
-        {{ form.submit(class="btn btn-primary") }}
-      </div>
-    </div>
   </form>
 </div>
    </div>

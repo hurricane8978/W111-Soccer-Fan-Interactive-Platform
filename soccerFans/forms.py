@@ -13,6 +13,8 @@ class Postform(FlaskForm):
     # date = DateField('Date', format='%Y-%m-%d', validators=(DataRequired(),))
     submit = SubmitField('submit posts')
 
+class DeletePostForm(FlaskForm):
+    submit = SubmitField('Delete')
 class Commentform(FlaskForm):
     anonymous = RadioField('anonymous ', choices=[(False,'Unanonymous'),(True,'Anonymous')], default=False)
     comment = TextAreaField('post', validators=(DataRequired(), length(max=200), ))

@@ -10,9 +10,21 @@
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
         {% include "fans_menu.html"  %}
-		
+		<br>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-primary">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <br>
+
 		<a type="button" class="layui-btn layui-btn-normal" style="margin-top:20px;margin-left:10%;" href="{{ url_for('postCreate', uid= session["user_id"]) }}">
             <i class="layui-icon" ></i> Create a new post</a>
+
         <div class="layui-form" style="width:80%;margin-left:10%;">
             <table class="layui-table" id="mytable">
 

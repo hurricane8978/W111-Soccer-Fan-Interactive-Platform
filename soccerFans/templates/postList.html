@@ -15,25 +15,30 @@
             <table class="layui-table" id="mytable">
                 <thead>
                     <tr>
-					    <th>post_id</th>
-                        <th>title</th>
-						<th>author</th>
-                        <th>create_time</th>
-                        <th>operate</th>
+					    <th>Post ID</th>
+                        <th>Title</th>
+						<th>Author</th>
+                        <th>Posted Time</th>
+                        <th>Operations</th>
                     </tr>
                 </thead>
                 <tbody>
-
+                {% for i in range(0, len) %}
                     <tr>
-						<td style="width:140px;">1</a></td>
-                        <td >arrived at L.A.</td>
-						<td style="width:140px;">2022-11-13 12:00:00</td>
-                        <td style="width:140px;">John</td>
+						<td style="width:140px;"><a>{{ allpost[i][0] }}</a></td>
+                        <td >{{ allpost[i][3] }}</td>
+                        <td>{{ names[i][0] }}</td>
+                        <td style="width:140px;">{{ allpost[i][2] }}</td>
                         <td style="width:200px;">
-                            <a class="layui-btn layui-btn-sm" href="2">view</a>
+                            {% if allpost[i][1] == session["user_id"] %}
+                                <a class="layui-btn layui-btn-sm" href="{{ url_for('postDelete', post_id=allpost[i][0]) }}">Delete</a>
+							    <a class="layui-btn layui-btn-sm" href="{{ url_for('postEdit', post_id=allpost[i][0]) }}">Edit</a>
+                            {% endif %}
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postEdit', post_id=allpost[i][0]) }}">View</a>
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('like', post_id=allpost[i][0]) }}">Likes</a>
                         </td>
                     </tr>
-                   
+                {% endfor %}
                 </tbody>
             </table>
         </div>

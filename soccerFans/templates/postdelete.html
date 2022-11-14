@@ -1,19 +1,30 @@
-{% extends "base.html" %}
-
-{% block main %}
-<div class="container-fluid">
-  <form action="{{ url_for('delete', task_id=task_id) }}" method="post">
-    {{ form.csrf_token }}
-    <p>Are you sure you want to delete the following task?</p>
-    <div class="row">
-      <div class="col">
-        <h3>{{ title }}</h3>
-      </div>
-      <div class="col">
-        {{ form.submit(class="btn btn-danger") }}
-        <a href="{{ url_for('index') }}" class="btn btn-primary">Cancel</a>
-      </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>create post</title>
+    <link rel="stylesheet" href="layui-2.6.5/src/css/layui.css">
+    <script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script src="layui-2.6.5/src/layui.js" charset="utf-8"></script>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        {% include "fans_menu.html"  %}
+        <div class="container-fluid">
+            <form action="{{ url_for('postDelete', post_id=post_id) }}" method="post">
+                {{ form.csrf_token }}
+                <p>Are you sure you want to delete the following task?</p>
+                <div class="row">
+                    <div class="col">
+                        <h3>{{ title }}</h3>
+                    </div>
+                    <div class="col">
+                        {{ form.submit(class="btn btn-danger") }}
+                        <a href="{{ url_for('myPost', uid=session["user_id"]) }}" class="btn btn-primary">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-  </form>
-</div>
-{% endblock %}
+</body>
+</html>

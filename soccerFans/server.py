@@ -29,6 +29,15 @@ def queryOne(sql):
     db.close()
     return result
 
+def queryOnewithData(sql, data):
+    db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
+    cursor = db.cursor()
+    cursor.execute(sql, data)
+    result = cursor.fetchone()
+    cursor.close()
+    db.close()
+    return result
+
 def queryMany(sql):
     db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
     cursor = db.cursor()
@@ -90,14 +99,32 @@ def eventView():
 
 @server.route('/postList')
 def postList():
-    #results = queryMany(sql)
-    # follows = []
-    # for r in results:
-        # follow = {}
-        # follow['user_id'] = r[0]
-        # follow['name'] = r[1]
-        # follows.append(follow)
-    return render_template('postList.html')
+    sql = """
+        SELECT *
+        FROM posts"""
+    allpost = queryMany(sql)
+    # get all names of users
+    sql = """
+    SELECT u.name
+    FROM users u, posts p
+    WHERE p.uid = u.uid"""
+    names = queryMany(sql)
+    if allpost is None:
+        abort(404)
+    return render_template('postList.html', allpost=allpost, names=names, len=len(allpost))
+
+@server.route('/<int:post_id>/viewpost')
+def postView(post_id, check_author=True):
+    user_id = session["user_id"]
+
+    sql = """
+            SELECT *
+            FROM posts
+            WHERE post_id = %s AND uid = %s
+            """
+    post = queryOnewithData(sql, (post_id, user_id,))
+
+    return render_template('postview.html', post=post)
 
 @server.route('/<int:uid>/myPost')
 def myPost(uid, check_author=True):
@@ -134,14 +161,69 @@ def postCreate(uid, check_author=True):
     return render_template('postcreate.html', form=form, user_id=user_id)
 
 @server.route('/<int:post_id>/deltepost', methods=['GET', 'POST'])
-def postDelete(post_id, check_author=True):
+def postDelete(post_id):
+    user_id = session["user_id"]
+    form = forms.DeletePostForm()
+    post = queryOnewithData("SELECT * FROM posts WHERE post_id = %s", (post_id, ))
+    #if post exists
+    if post:
+        if form.validate_on_submit():
+            #sql = """
+                    #DELETE FROM comment WHERE post_id = %s AND uid = %s
+                #"""
+            #execSQLwithData(sql, (post_id, user_id, ))
 
-    return render_template('postdelete.html')
+            #sql = """
+                    #DELETE FROM liked WHERE post_id = %s AND user_id = %s
+                #"""
+            #execSQLwithData(sql, (post_id, user_id,))
 
-@server.route('/<int:post_id>/createpost', methods=['GET', 'POST'])
+
+            sql = """
+                    DELETE FROM posts WHERE post_id = %s AND uid = %s
+                """
+            execSQLwithData(sql, (post_id, user_id, ))
+
+            flash("Deleted your post and all comments!")
+            return redirect(url_for("myPost", uid=user_id))
+
+        return render_template('postdelete.html', form=form, post_id=post_id)
+    else:
+        flash("Post not Found!")
+    return redirect(url_for("myPost", uid=user_id))
+
+
+@server.route('/<int:post_id>/editpost', methods=['GET', 'POST'])
 def postEdit(post_id, check_author=True):
+    user_id = session["user_id"]
+    """Update a post if the current user is the author."""
+    sql = """
+            SELECT *
+            FROM posts
+            WHERE post_id = %s AND uid = %s
+            """
+    post = queryOnewithData(sql, (post_id, user_id, ))
 
-    return render_template('postedit.html')
+    form = forms.Postform(
+        title=post[3],
+        post=post[4])
+
+    if form.validate_on_submit():
+        title = form.title.data
+        post = form.post.data
+        time = datetime.utcnow()
+        # update sql
+        sql = """
+        
+                UPDATE posts
+                SET title = %s, content = %s, post_time = %s
+                WHERE post_id = %s
+            """
+        execSQLwithData(sql, (title, post, time, post_id,))
+        flash("updated your post!")
+        return redirect(url_for('postList'))
+
+    return render_template('postedit.html', post_id=post_id, form=form)
 
 @server.route('/<int:post_id>/like')
 def like():
