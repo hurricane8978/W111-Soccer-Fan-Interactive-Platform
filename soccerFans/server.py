@@ -188,7 +188,7 @@ def postCreate(uid, check_author=True):
         # serial not working...
         max_post_id = queryOne('SELECT max(post_id) max_post_id From posts')[0]
         post_id = max_post_id + 1
-        sql = """INSERT INTO posts (post_id, title, content, post_time, uid) VALUES 
+        sql = """INSERT INTO posts (post_id, title, content, post_time, uid) VALUES
                  (%s,%s, %s, %s, %s);"""
         data = (post_id, title, post, time, user_id, )
         execSQLwithData(sql, data)
@@ -274,7 +274,7 @@ def like(post_id):
         max_like_id = queryOne('SELECT max(like_id) max_like_id From likes')[0]
         like_id = max_like_id + 1
         time = datetime.utcnow()
-        sql = """INSERT INTO likes (like_id, like_time, post_id, uid) VALUES 
+        sql = """INSERT INTO likes (like_id, like_time, post_id, uid) VALUES
                 (%s, %s, %s, %s)"""
         execSQLwithData(sql, (like_id, time, post_id, user_id,))
         flash("Liked!")
@@ -418,9 +418,9 @@ def user(uid):
         return render_template('account.html', user=result)
 
 
-<<<<<<< HEAD
-# if __name__ == '__main__':
-#     server.run()
+# <<<<<<< HEAD
+# # if __name__ == '__main__':
+# #     server.run()
 
 if __name__ == "__main__":
   import click
@@ -448,8 +448,8 @@ if __name__ == "__main__":
     server.run(host=HOST, port=PORT, debug=True, threaded=threaded)
 
 
-  run()
-=======
+  # run()
+# =======
 if __name__ == '__main__':
     server.run(debug=True, threaded=True)
->>>>>>> bbd4337b717eeccac4386255a5ae1e7bf564b9ca
+# >>>>>>> bbd4337b717eeccac4386255a5ae1e7bf564b9ca
