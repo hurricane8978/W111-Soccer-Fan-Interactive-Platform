@@ -1,9 +1,6 @@
 <ul class="layui-nav layui-bg-green">
     <li class="layui-nav-item"><a href="/">Home</a></li>
 	
-	
-
-	
 	{% if session['user_id'] == 0  %}
 	<li class="layui-nav-item"><a href="javascript:void(0);">Events</a>
 		<dl class="layui-nav-child">
@@ -23,26 +20,33 @@
 	{% else %}
 	<li class="layui-nav-item"><a href="javascript:void(0);">Events</a>
 		<dl class="layui-nav-child">
-            <dd><a href="eventsManagement">EventsManagement</a></dd>
-            <dd><a href="eventList">EventsList</a></dd>
+            <dd><a href="eventsManagement">Manage Events</a></dd>
+            <dd><a href="eventList">Events List</a></dd>
         </dl>
 	</li>
 	
     <li class="layui-nav-item"><a href="javascript:void(0);">Posts</a>
 		<dl class="layui-nav-child">
-            <dd><a href="{{ url_for('myPost', uid=session['user_id']) }}">My Post</a></dd>
-            <dd><a href="{{ url_for('postList') }}">Post List</a></dd>
+            <dd><a href="{{ url_for('myPost', uid=session['user_id']) }}">My Posts</a></dd>
+            <dd><a href="{{ url_for('postList') }}">Posts List</a></dd>
         </dl>
 	</li>
+
 	<li class="layui-nav-item"><a href="vote">Vote</a></li>
-    <li class="layui-nav-item"><a href="comments">Comments</a></li>
 	<li class="layui-nav-item"><a href="javascript:void(0);">Follows</a>
 		<dl class="layui-nav-child">
             <dd><a href="myPost">User List</a></dd>
             <dd><a href="follows">My Follows</a></dd>
         </dl>
 	</li>
-	<li class="layui-nav-item"><a href="aboutUs">About Us</a></li>
+
+    <li class="layui-nav-item"><a href="javascript:void(0);">About</a>
+		<dl class="layui-nav-child">
+            <dd><a href="{{ url_for('aboutUs') }}">About Us</a></dd>
+            <dd><a href="{{ url_for('QA') }}">Q&A</a></dd>
+        </dl>
+	</li>
+
     <li>
         <ul class="layui-nav layui-bg-green layui-layout-right">
             <li class="layui-nav-item">
@@ -50,8 +54,8 @@
                     {{session['name']}}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="userinfo">profile</a></dd>
-                    <dd><a href="quit">quit</a></dd>
+                    <dd><a href="{{ url_for('user', uid=session['user_id']) }}">Account Info</a></dd>
+                    <dd><a href="quit">Exit</a></dd>
                 </dl>
             </li>
         </ul>

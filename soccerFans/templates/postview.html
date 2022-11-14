@@ -8,28 +8,28 @@
 		<div class="layui-collapse" style="width:80%;margin-left:10%;margin-top:30px;">
 		   <div class="layui-colla-item">
 			<h2 class="layui-colla-title">Author</h2>
-			<div class="layui-colla-content">
+			<div class="layui-colla-content layui-show">
 			  <p>{{ name }}</p>
 			</div>
 		  </div>
 
 		  <div class="layui-colla-item">
 			<h2 class="layui-colla-title">Title</h2>
-			<div class="layui-colla-content">
+			<div class="layui-colla-content layui-show">
 			  <p>{{ post[3] }}</p>
 			</div>
 
 		  </div>
 		  <div class="layui-colla-item">
 			<h2 class="layui-colla-title">Contents</h2>
-			<div class="layui-colla-content">
+			<div class="layui-colla-content layui-show">
 			  <p>{{ post[4] }}</p>
 			</div>
 		  </div>
 
           <div class="layui-colla-item">
 			<h2 class="layui-colla-title">Comments</h2>
-			<div class="layui-colla-content">
+			<div class="layui-colla-content layui-show">
                 {% for comment in comments %}
                     <p>{{ comment[0] }}. {{ comment[1] }}</p>
                     {% if comment[4] == 'Anonymous' %}
@@ -43,6 +43,7 @@
 		</div>
 
     </div>
+
     <script>
         layui.use('element', function () {
             var element = layui.element;

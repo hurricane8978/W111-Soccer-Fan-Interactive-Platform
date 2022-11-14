@@ -136,7 +136,7 @@ def postList():
 
     return render_template('postList.html', allpost=allpost, names=names, len=len(allpost), likes=like_list)
 
-@server.route('/<int:post_id>/viewpost')
+@server.route('/<int:post_id>-viewpost')
 def postView(post_id):
     sql = """
             SELECT *
@@ -163,7 +163,7 @@ def postView(post_id):
 
     return render_template('postview.html', post=post, name=name[0], comments=comments)
 
-@server.route('/<int:uid>/myPost')
+@server.route('/<int:uid>-myPost')
 def myPost(uid, check_author=True):
     sql = """
     SELECT *
@@ -174,7 +174,7 @@ def myPost(uid, check_author=True):
         abort(404)
     return render_template('myPost.html', mypost=mypost)
 
-@server.route('/<int:uid>/createpost', methods=['GET', 'POST'])
+@server.route('/<int:uid>-createpost', methods=['GET', 'POST'])
 def postCreate(uid, check_author=True):
     """Create a new post for the current user."""
     user_id = session["user_id"]
@@ -197,7 +197,7 @@ def postCreate(uid, check_author=True):
 
     return render_template('postcreate.html', form=form, user_id=user_id)
 
-@server.route('/<int:post_id>/deltepost', methods=['GET', 'POST'])
+@server.route('/<int:post_id>-deltepost', methods=['GET', 'POST'])
 def postDelete(post_id):
     user_id = session["user_id"]
     form = forms.DeletePostForm()
@@ -229,7 +229,7 @@ def postDelete(post_id):
     return redirect(url_for("myPost", uid=user_id))
 
 
-@server.route('/<int:post_id>/editpost', methods=['GET', 'POST'])
+@server.route('/<int:post_id>-editpost', methods=['GET', 'POST'])
 def postEdit(post_id, check_author=True):
     user_id = session["user_id"]
     """Update a post if the current user is the author."""
@@ -260,7 +260,7 @@ def postEdit(post_id, check_author=True):
 
     return render_template('postedit.html', post_id=post_id, form=form)
 
-@server.route('/<int:post_id>/like')
+@server.route('/<int:post_id>-like')
 def like(post_id):
     user_id = session["user_id"]
     sql = """
@@ -284,7 +284,7 @@ def like(post_id):
     return redirect(url_for('postList'))
 
 # createcomment
-@server.route("/<int:post_id>/createcomment", methods=("GET", "POST"))
+@server.route("/<int:post_id>-createcomment", methods=("GET", "POST"))
 def postComment(post_id):
     """Create a new comment for posts."""
     form = forms.Commentform()
@@ -321,6 +321,10 @@ def vote():
 
 @server.route('/aboutUs')
 def aboutUs():
+    return render_template('aboutUs.html')
+
+@server.route('/qa')
+def QA():
     return render_template('aboutUs.html')
 
 @server.route('/events')
@@ -372,12 +376,12 @@ def checkFansLogin():
     sql = "select * from users where email = '%s' and password = '%s'" %(request.form['username'],request.form['password'])
     result = queryOne(sql)
     if result is None:
-        return "<script>alert('账号密码有误!');window.location='fansLogin';</script>";
+        return "<script>alert('Wrong Account name or password!');window.location='fansLogin';</script>";
     else:
         session['user_id'] = result[0]
         session['name'] = result[2]
 
-        return "<script>alert('登陆成功!');window.location='/';</script>";
+        return "<script>alert('Logged In!');window.location='/';</script>";
 
 @server.route('/reg')
 def reg():
@@ -404,16 +408,14 @@ def quit():
     session['user_id'] = 0
     return render_template('quit.html')
 
-@server.route('/user')
-def user():
-    #results = queryMany(sql)
-    # follows = []
-    # for r in results:
-        # follow = {}
-        # follow['user_id'] = r[0]
-        # follow['name'] = r[1]
-        # follows.append(follow)
-    return render_template('home.html')
+@server.route('/<int:uid>-user')
+def user(uid):
+    sql = "select * from v_users where uid = '%s'"
+    result = queryOnewithData(sql, (uid,))
+    if result is None:
+        return "<script>alert('Account Info Extract Failed!');window.location='fansLogin';</script>";
+    else:
+        return render_template('account.html', user=result)
 
 
 if __name__ == '__main__':
