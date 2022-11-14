@@ -12,6 +12,7 @@
                         <th>Posted Time</th>
                         <th>Operations</th>
                         <th>Likes</th>
+                        <th>Comment</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,13 +24,24 @@
                         <td style="width:140px;">{{ allpost[i][2] }}</td>
                         <td style="width:200px;">
                             {% if allpost[i][1] == session["user_id"] %}
+                                <div class="row">
                                 <a class="layui-btn layui-btn-sm" href="{{ url_for('postDelete', post_id=allpost[i][0]) }}">Delete</a>
+                                </div>
+                                <div class="row">
 							    <a class="layui-btn layui-btn-sm" href="{{ url_for('postEdit', post_id=allpost[i][0]) }}">Edit</a>
+                                </div>
                             {% endif %}
+                            <div class="row">
                             <a class="layui-btn layui-btn-sm" href="{{ url_for('postView', post_id=allpost[i][0]) }}">View</a>
+                            </div>
+                            <div class="row">
                             <a class="layui-btn layui-btn-sm" href="{{ url_for('like', post_id=allpost[i][0]) }}">Likes</a>
+                            </div>
                         </td>
                         <td >{{ likes[i][0] }}</td>
+                        <td>
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postComment', post_id=allpost[i][0]) }}">Comment</a>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

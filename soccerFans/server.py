@@ -47,6 +47,15 @@ def queryMany(sql):
     db.close()
     return results
 
+def queryManywithData(sql, data):
+    db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
+    cursor = db.cursor()
+    cursor.execute(sql, data)
+    results = cursor.fetchall()
+    cursor.close()
+    db.close()
+    return results
+
 def execSQL(sql):
     db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
     cursor = db.cursor()
@@ -135,14 +144,24 @@ def postView(post_id):
             WHERE post_id = %s
             """
     post = queryOnewithData(sql, (post_id, ))
-    # get author name
-    sql = """
-       SELECT u.name
-       FROM users u, posts p
-       WHERE p.post_id = %s AND u.uid = p.uid"""
-    name = queryOnewithData(sql, (post_id, ))
+    if post is None:
+        abort(404)
+    else:
+        # get author name
+        sql = """
+            SELECT u.name
+            FROM users u, posts p
+            WHERE p.post_id = %s AND u.uid = p.uid"""
+        name = queryOnewithData(sql, (post_id, ))
+        #get comments
+        sql = """
+            SELECT c.comment_id, c.content, c.com_time, u.name, c.if_anonymous
+            FROM comments c, posts p, users u
+            WHERE p.post_id = %s AND c.post_id = p.post_id
+            AND c.uid = u.uid"""
+        comments = queryManywithData(sql, (post_id,))
 
-    return render_template('postview.html', post=post, name=name[0])
+    return render_template('postview.html', post=post, name=name[0], comments=comments)
 
 @server.route('/<int:uid>/myPost')
 def myPost(uid, check_author=True):
@@ -186,16 +205,15 @@ def postDelete(post_id):
     #if post exists
     if post:
         if form.validate_on_submit():
-            #sql = """
-                    #DELETE FROM comment WHERE post_id = %s AND uid = %s
-                #"""
-            #execSQLwithData(sql, (post_id, user_id, ))
+            sql = """
+                    DELETE FROM comments WHERE post_id = %s AND uid = %s
+                """
+            execSQLwithData(sql, (post_id, user_id, ))
 
-            #sql = """
-                    #DELETE FROM liked WHERE post_id = %s AND user_id = %s
-                #"""
-            #execSQLwithData(sql, (post_id, user_id,))
-
+            sql = """
+                    DELETE FROM likes WHERE post_id = %s AND uid = %s
+                """
+            execSQLwithData(sql, (post_id, user_id,))
 
             sql = """
                     DELETE FROM posts WHERE post_id = %s AND uid = %s
@@ -232,7 +250,6 @@ def postEdit(post_id, check_author=True):
         time = datetime.utcnow()
         # update sql
         sql = """
-        
                 UPDATE posts
                 SET title = %s, content = %s, post_time = %s
                 WHERE post_id = %s
@@ -266,17 +283,22 @@ def like(post_id):
 
     return redirect(url_for('postList'))
 
-@server.route('/<int:post_id>/comment')
-def comment():
-    #sql = "select * from follow where user_id = %s" % (str(session.get(user_id)))
-    #results = queryMany(sql)
-    # follows = []
-    # for r in results:
-        # follow = {}
-        # follow['user_id'] = r[0]
-        # follow['name'] = r[1]
-        # follows.append(follow)
-    return render_template('comments.html')
+# createcomment
+@server.route("/<int:post_id>/createcomment", methods=("GET", "POST"))
+def postComment(post_id):
+    """Create a new comment for posts."""
+    form = forms.Commentform()
+    user_id = session["user_id"]
+    if form.validate_on_submit():
+        comment = form.comment.data
+        if_anonymous = form.anonymous.data
+
+        sql = "INSERT INTO comments (content, post_id, uid, if_anonymous) VALUES (%s, %s, %s, %s)"
+        execSQLwithData(sql, (comment, post_id, user_id, if_anonymous,))
+        flash("Commented!")
+        return redirect(url_for('postView', post_id=post_id))
+
+    return render_template('comments.html', form = form, user_id = user_id, post_id = post_id)
 
 @server.route('/follows')
 def follows():

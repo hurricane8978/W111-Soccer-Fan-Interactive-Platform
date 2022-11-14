@@ -8,13 +8,13 @@
 
         <div class="layui-form" style="width:80%;margin-left:10%;">
             <table class="layui-table" id="mytable">
-
                 <thead>
                     <tr>
 					    <th>Post ID</th>
                         <th>Title</th>
                         <th>Create Time</th>
                         <th>Operations</th>
+                        <th>Comment</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,6 +28,9 @@
 							<a class="layui-btn layui-btn-sm" href="{{ url_for('postEdit', post_id=post[0]) }}">Edit</a>
                             <a class="layui-btn layui-btn-sm" href="{{ url_for('postView', post_id=post[0]) }}">View</a>
                             <a class="layui-btn layui-btn-sm" href="{{ url_for('like', post_id=post[0]) }}">Likes</a>
+                        </td>
+                        <td>
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postComment', post_id=post[0]) }}">Comment</a>
                         </td>
                     </tr>
                    {% endfor %}

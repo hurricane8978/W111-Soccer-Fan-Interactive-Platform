@@ -26,6 +26,20 @@
 			  <p>{{ post[4] }}</p>
 			</div>
 		  </div>
+
+          <div class="layui-colla-item">
+			<h2 class="layui-colla-title">Comments</h2>
+			<div class="layui-colla-content">
+                {% for comment in comments %}
+                    <p>{{ comment[0] }}. {{ comment[1] }}</p>
+                    {% if comment[4] == 'Anonymous' %}
+                        <p>Anonymous at {{ comment[2] }}</p>
+                    {% else %}
+                        <p>{{ comment[3] }} at {{ comment[2] }}</p>
+                    {% endif %}
+                {% endfor %}
+
+			</div>
 		</div>
 
     </div>

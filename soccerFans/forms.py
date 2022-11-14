@@ -16,10 +16,6 @@ class Postform(FlaskForm):
 class DeletePostForm(FlaskForm):
     submit = SubmitField('Delete')
 class Commentform(FlaskForm):
-    anonymous = RadioField('anonymous ', choices=[(False,'Unanonymous'),(True,'Anonymous')], default=False)
+    anonymous = RadioField('anonymous ', choices=[('Unanonymous','Unanonymous'),('Anonymous','Anonymous')], default='Unanonymous')
     comment = TextAreaField('post', validators=(DataRequired(), length(max=200), ))
     submit = SubmitField('submit conmment')
-
-class Likeform(FlaskForm):
-    like = SelectField(u'like', choices=[('1', 'like'), ('0', 'dislike')], validators=(DataRequired(),))
-    submit = SubmitField('submit')
