@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>an interactive platform for soccer fans or potential fans</title>
+    <link rel="stylesheet" href="layui-2.6.5/src/css/layui.css">
+    <script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script src="layui-2.6.5/src/layui.js" charset="utf-8"></script>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        {% include "fans_menu.html"  %}
+        <div class="container-fluid">
+            <form action="{{ url_for('postCreate', uid=session['user_id']) }}" method="post">
+                {{ form.csrf_token }}
+                <div class="row">
+                    <h3>Add Post</h3>
+                    <div class="col">
+                        <label for="posttitle" class="form-label">Post Title</label>
+                        {{ form.title(class="form-control") }}
+                    </div>
+                    <div class="col">
+                        <label for="textarea" class="form-label">Post Content</label>
+                        {{ form.post(class="form-control") }}
+                    </div>
+                <div class="col">
+                    {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

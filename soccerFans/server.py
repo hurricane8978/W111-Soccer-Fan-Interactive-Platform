@@ -1,12 +1,14 @@
 #-*- coding: utf-8 -*-
 
-from flask import Flask,render_template,request,redirect, abort
+from flask import Flask,render_template,request,redirect, abort, flash
 from flask import url_for,make_response,session,send_from_directory
 
 import uuid
 import json
 import traceback
 import time,psycopg2
+import forms
+from datetime import datetime
 
 server = Flask("an interactive platform for soccer fans or potential fans",static_url_path='',static_folder="static",template_folder="templates")
 server.secret_key = "12311"
@@ -40,6 +42,15 @@ def execSQL(sql):
     db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
     cursor = db.cursor()
     cursor.execute(sql)
+    db.commit()
+    cursor.close()
+    db.close()
+
+## query with data input
+def execSQLwithData(sql, data):
+    db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
+    cursor = db.cursor()
+    cursor.execute(sql, data)
     db.commit()
     cursor.close()
     db.close()
@@ -99,20 +110,62 @@ def myPost(uid, check_author=True):
         abort(404)
     return render_template('myPost.html', mypost=mypost)
 
-@server.route('/<int:post_id>/createpost', methods=['GET', 'POST'])
-def postcreate(post_id, check_author=True):
+@server.route('/<int:uid>/createpost', methods=['GET', 'POST'])
+def postCreate(uid, check_author=True):
+    """Create a new post for the current user."""
+    user_id = session["user_id"]
+    form = forms.Postform()
 
-    return render_template('postadd.html')
+    if form.validate_on_submit():
+        title = form.title.data
+        post = form.post.data
+        time = datetime.utcnow()
+
+        # serial not working...
+        max_post_id = queryOne('SELECT max(post_id) max_post_id From posts')[0]
+        post_id = max_post_id + 1
+        sql = """INSERT INTO posts (post_id, title, content, post_time, uid) VALUES 
+                 (%s,%s, %s, %s, %s);"""
+        data = (post_id, title, post, time, user_id, )
+        execSQLwithData(sql, data)
+        flash('Post Submitted!')
+        return redirect(url_for("myPost", uid=user_id))
+
+    return render_template('postcreate.html', form=form, user_id=user_id)
 
 @server.route('/<int:post_id>/deltepost', methods=['GET', 'POST'])
-def postdelete(post_id, check_author=True):
+def postDelete(post_id, check_author=True):
 
     return render_template('postdelete.html')
 
 @server.route('/<int:post_id>/createpost', methods=['GET', 'POST'])
-def postedit(post_id, check_author=True):
+def postEdit(post_id, check_author=True):
 
-    return render_template('postadd.html')
+    return render_template('postedit.html')
+
+@server.route('/<int:post_id>/like')
+def like():
+    #sql = "select * from follow where user_id = %s" % (str(session.get(user_id)))
+    #results = queryMany(sql)
+    # follows = []
+    # for r in results:
+        # follow = {}
+        # follow['user_id'] = r[0]
+        # follow['name'] = r[1]
+        # follows.append(follow)
+    return render_template('fans_menu.html')
+
+@server.route('/<int:post_id>/comment')
+def comment():
+    #sql = "select * from follow where user_id = %s" % (str(session.get(user_id)))
+    #results = queryMany(sql)
+    # follows = []
+    # for r in results:
+        # follow = {}
+        # follow['user_id'] = r[0]
+        # follow['name'] = r[1]
+        # follows.append(follow)
+    return render_template('comments.html')
 
 @server.route('/follows')
 def follows():

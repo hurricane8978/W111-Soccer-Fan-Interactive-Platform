@@ -11,8 +11,8 @@
     <div class="layui-layout layui-layout-admin">
         {% include "fans_menu.html"  %}
 		
-		<button type="button" class="layui-btn layui-btn-normal" style="margin-top:20px;margin-left:10%;"><i class="layui-icon" ></i> Create a new post</button>
-
+		<a type="button" class="layui-btn layui-btn-normal" style="margin-top:20px;margin-left:10%;" href="{{ url_for('postCreate', uid= session["user_id"]) }}">
+            <i class="layui-icon" ></i> Create a new post</a>
         <div class="layui-form" style="width:80%;margin-left:10%;">
             <table class="layui-table" id="mytable">
 
@@ -31,11 +31,10 @@
                         <td >{{ post[3] }}</td>
                         <td style="width:140px;">{{ post[2] }}</td>
                         <td style="width:200px;">
-                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postdelete', post_id=post[0]) }}">delete</a>
-							<a class="layui-btn layui-btn-sm" href="{{ url_for('postedit', post_id=post[0]) }}">edit</a>
-                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postedit', post_id=post[0]) }}">view</a>
-                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postedit', post_id=post[0]) }}">likes</a>
-                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postedit', post_id=post[0]) }}">comments</a>
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postDelete', post_id=post[0]) }}">Delete</a>
+							<a class="layui-btn layui-btn-sm" href="{{ url_for('postEdit', post_id=post[0]) }}">Edit</a>
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postEdit', post_id=post[0]) }}">View</a>
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('like', post_id=post[0]) }}">Likes</a>
                         </td>
                     </tr>
                    {% endfor %}
