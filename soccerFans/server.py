@@ -114,17 +114,21 @@ def postList():
     return render_template('postList.html', allpost=allpost, names=names, len=len(allpost))
 
 @server.route('/<int:post_id>/viewpost')
-def postView(post_id, check_author=True):
-    user_id = session["user_id"]
-
+def postView(post_id):
     sql = """
             SELECT *
             FROM posts
-            WHERE post_id = %s AND uid = %s
+            WHERE post_id = %s
             """
-    post = queryOnewithData(sql, (post_id, user_id,))
+    post = queryOnewithData(sql, (post_id, ))
+    # get author name
+    sql = """
+       SELECT u.name
+       FROM users u, posts p
+       WHERE p.post_id = %s AND u.uid = p.uid"""
+    name = queryOnewithData(sql, (post_id, ))
 
-    return render_template('postview.html', post=post)
+    return render_template('postview.html', post=post, name=name[0])
 
 @server.route('/<int:uid>/myPost')
 def myPost(uid, check_author=True):
@@ -226,16 +230,27 @@ def postEdit(post_id, check_author=True):
     return render_template('postedit.html', post_id=post_id, form=form)
 
 @server.route('/<int:post_id>/like')
-def like():
-    #sql = "select * from follow where user_id = %s" % (str(session.get(user_id)))
-    #results = queryMany(sql)
-    # follows = []
-    # for r in results:
-        # follow = {}
-        # follow['user_id'] = r[0]
-        # follow['name'] = r[1]
-        # follows.append(follow)
-    return render_template('fans_menu.html')
+def like(post_id):
+    user_id = session["user_id"]
+    sql = """
+                SELECT *
+                FROM posts
+                WHERE post_id = %s
+                """
+    post = queryOnewithData(sql, (post_id, ))
+    if post:
+        # serial not working...
+        max_like_id = queryOne('SELECT max(like_id) max_like_id From likes')[0]
+        like_id = max_like_id + 1
+        time = datetime.utcnow()
+        sql = """INSERT INTO likes (like_id, like_time, post_id, uid) VALUES 
+                (%s, %s, %s, %s)"""
+        execSQLwithData(sql, (like_id, time, post_id, user_id,))
+        flash("Liked!")
+    else:
+        flash("Post not found!")
+
+    return redirect(url_for('postList'))
 
 @server.route('/<int:post_id>/comment')
 def comment():

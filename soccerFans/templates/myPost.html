@@ -1,26 +1,7 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>an interactive platform for soccer fans or potential fans</title>
-    <link rel="stylesheet" href="layui-2.6.5/src/css/layui.css">
-    <script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
-    <script src="layui-2.6.5/src/layui.js" charset="utf-8"></script>
-</head>
-<body class="layui-layout-body">
+﻿{% extends 'base.html' %}
+
+{% block content %}
     <div class="layui-layout layui-layout-admin">
-        {% include "fans_menu.html"  %}
-		<br>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-primary">
-                    {{ message }}
-                </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        <br>
 
 		<a type="button" class="layui-btn layui-btn-normal" style="margin-top:20px;margin-left:10%;" href="{{ url_for('postCreate', uid= session["user_id"]) }}">
             <i class="layui-icon" ></i> Create a new post</a>
@@ -45,7 +26,7 @@
                         <td style="width:200px;">
                             <a class="layui-btn layui-btn-sm" href="{{ url_for('postDelete', post_id=post[0]) }}">Delete</a>
 							<a class="layui-btn layui-btn-sm" href="{{ url_for('postEdit', post_id=post[0]) }}">Edit</a>
-                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postEdit', post_id=post[0]) }}">View</a>
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postView', post_id=post[0]) }}">View</a>
                             <a class="layui-btn layui-btn-sm" href="{{ url_for('like', post_id=post[0]) }}">Likes</a>
                         </td>
                     </tr>
@@ -60,5 +41,4 @@
             var element = layui.element;
         });
     </script>
-</body>
-</html>
+{% endblock %}

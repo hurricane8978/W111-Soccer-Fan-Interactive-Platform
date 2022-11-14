@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>create post</title>
-    <link rel="stylesheet" href="layui-2.6.5/src/css/layui.css">
-    <script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
-    <script src="layui-2.6.5/src/layui.js" charset="utf-8"></script>
-</head>
-<body class="layui-layout-body">
+{% extends 'base.html' %}
+
+{% block content %}
     <div class="layui-layout layui-layout-admin">
-        {% include "fans_menu.html"  %}
         <div class="container-fluid">
             <form action="{{ url_for('postCreate', uid=session['user_id']) }}" method="post">
                 {{ form.csrf_token }}
@@ -35,5 +27,4 @@
             var element = layui.element;
         });
     </script>
-</body>
-</html>
+{% endblock %}
