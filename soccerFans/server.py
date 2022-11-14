@@ -446,7 +446,7 @@ if __name__ == "__main__":
 
     HOST, PORT = host, port
     print("running on %s:%d" % (HOST, PORT))
-    server.run(host=HOST, port=PORT, debug=True, threaded=threaded)
+    server.run(host=HOST, port=PORT, debug=True, threaded=True)
   run()
 # =======
 # if __name__ == '__main__':
