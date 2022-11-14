@@ -11,33 +11,38 @@
     <div class="layui-layout layui-layout-admin">
         {% include "fans_menu.html"  %}
 		
-		<button type="button" class="layui-btn layui-btn-normal" style="margin-top:20px;margin-left:10%;"><i class="layui-icon"></i> Create a new post</button>
-		
+		<button type="button" class="layui-btn layui-btn-normal" style="margin-top:20px;margin-left:10%;"><i class="layui-icon" ></i> Create a new post</button>
+
         <div class="layui-form" style="width:80%;margin-left:10%;">
             <table class="layui-table" id="mytable">
+
                 <thead>
                     <tr>
-					    <th>post_id</th>
-                        <th>title</th>
-                        <th>create_time</th>
-                        <th>operate</th>
+					    <th>Post ID</th>
+                        <th>Title</th>
+                        <th>Create Time</th>
+                        <th>Operations</th>
                     </tr>
                 </thead>
                 <tbody>
-
+                {% for post in mypost %}
                     <tr>
-						<td style="width:140px;">1</a></td>
-                        <td >arrived at L.A.</td>
-                        <td style="width:140px;">2022-11-13 12:00:00</td>
+						<td style="width:140px;"><a>{{ post[0] }}</a></td>
+                        <td >{{ post[3] }}</td>
+                        <td style="width:140px;">{{ post[2] }}</td>
                         <td style="width:200px;">
-                            <a class="layui-btn layui-btn-sm" href="2">delete</a>
-							<a class="layui-btn layui-btn-sm" href="2">edit</a>
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postdelete', post_id=post[0]) }}">delete</a>
+							<a class="layui-btn layui-btn-sm" href="{{ url_for('postedit', post_id=post[0]) }}">edit</a>
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postedit', post_id=post[0]) }}">view</a>
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postedit', post_id=post[0]) }}">likes</a>
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('postedit', post_id=post[0]) }}">comments</a>
                         </td>
                     </tr>
-                   
+                   {% endfor %}
                 </tbody>
             </table>
         </div>
+
     </div>
     <script>
         layui.use('element', function () {

@@ -30,8 +30,8 @@
 	
     <li class="layui-nav-item"><a href="javascript:void(0);">Posts</a>
 		<dl class="layui-nav-child">
-            <dd><a href="myPost">My Post</a></dd>
-            <dd><a href="postList">PostList</a></dd>
+            <dd><a href="{{ url_for('myPost', uid=session['user_id']) }}">My Post</a></dd>
+            <dd><a href="{{ url_for('postList') }}">PostList</a></dd>
         </dl>
 	</li>
 	<li class="layui-nav-item"><a href="vote">Vote</a></li>

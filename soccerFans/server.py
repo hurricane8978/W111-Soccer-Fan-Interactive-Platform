@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-from flask import Flask,render_template,request,redirect
+from flask import Flask,render_template,request,redirect, abort
 from flask import url_for,make_response,session,send_from_directory
 
 import uuid
@@ -28,7 +28,7 @@ def queryOne(sql):
     return result
 
 def queryMany(sql):
-    db = psycopg2.connect(host='localhost',port='5432',user='root',password='123456')
+    db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
     cursor = db.cursor()
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -88,16 +88,31 @@ def postList():
         # follows.append(follow)
     return render_template('postList.html')
 
-@server.route('/myPost')
-def myPost():
-    #results = queryMany(sql)
-    # follows = []
-    # for r in results:
-        # follow = {}
-        # follow['user_id'] = r[0]
-        # follow['name'] = r[1]
-        # follows.append(follow)
-    return render_template('myPost.html')
+@server.route('/<int:uid>/myPost')
+def myPost(uid, check_author=True):
+    sql = """
+    SELECT *
+    FROM posts
+    WHERE uid = %s""" % (str(uid))
+    mypost = queryMany(sql)
+    if mypost is None:
+        abort(404)
+    return render_template('myPost.html', mypost=mypost)
+
+@server.route('/<int:post_id>/createpost', methods=['GET', 'POST'])
+def postcreate(post_id, check_author=True):
+
+    return render_template('postadd.html')
+
+@server.route('/<int:post_id>/deltepost', methods=['GET', 'POST'])
+def postdelete(post_id, check_author=True):
+
+    return render_template('postdelete.html')
+
+@server.route('/<int:post_id>/createpost', methods=['GET', 'POST'])
+def postedit(post_id, check_author=True):
+
+    return render_template('postadd.html')
 
 @server.route('/follows')
 def follows():
@@ -199,7 +214,7 @@ def indexPage():
 
 @server.route('/quit')
 def quit():
-    session.clear
+    session.clear()
     session['user_id'] = 0
     return render_template('quit.html')
 
