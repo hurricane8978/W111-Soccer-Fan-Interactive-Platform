@@ -16,12 +16,7 @@ db_password = "dbuserdbuser"
 db_name = "proj1part2"
 
 # config for forms
-server.config.from_mapping(
-    # a default secret that should be overridden by instance config
-    SECRET_KEY="ABC",
-    # store the database in the instance folder
-    DATABASE=DATABASEURI
-)
+server.config["SECRET_KEY"] = "ABC"
 
 def queryOne(sql):
     db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
