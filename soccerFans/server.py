@@ -408,6 +408,7 @@ def quit():
     session['user_id'] = 0
     return render_template('quit.html')
 
+# account info
 @server.route('/<int:uid>-user')
 def user(uid):
     sql = "select * from v_users where uid = '%s'"
