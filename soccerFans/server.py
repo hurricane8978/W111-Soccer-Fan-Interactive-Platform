@@ -188,7 +188,7 @@ def postCreate(uid, check_author=True):
         # serial not working...
         max_post_id = queryOne('SELECT max(post_id) max_post_id From posts')[0]
         post_id = max_post_id + 1
-        sql = """INSERT INTO posts (post_id, title, content, post_time, uid) VALUES 
+        sql = """INSERT INTO posts (post_id, title, content, post_time, uid) VALUES
                  (%s,%s, %s, %s, %s);"""
         data = (post_id, title, post, time, user_id, )
         execSQLwithData(sql, data)
@@ -274,7 +274,7 @@ def like(post_id):
         max_like_id = queryOne('SELECT max(like_id) max_like_id From likes')[0]
         like_id = max_like_id + 1
         time = datetime.utcnow()
-        sql = """INSERT INTO likes (like_id, like_time, post_id, uid) VALUES 
+        sql = """INSERT INTO likes (like_id, like_time, post_id, uid) VALUES
                 (%s, %s, %s, %s)"""
         execSQLwithData(sql, (like_id, time, post_id, user_id,))
         flash("Liked!")
@@ -419,5 +419,36 @@ def user(uid):
         return render_template('account.html', user=result)
 
 
-if __name__ == '__main__':
-    server.run(debug=True, threaded=True)
+# <<<<<<< HEAD
+# # if __name__ == '__main__':
+# #     server.run()
+
+if __name__ == "__main__":
+  import click
+
+  @click.command()
+  @click.option('--debug', is_flag=True)
+  @click.option('--threaded', is_flag=True)
+  @click.argument('HOST', default='0.0.0.0')
+  @click.argument('PORT', default=8111, type=int)
+  def run(debug, threaded, host, port):
+    """
+    This function handles command line parameters.
+    Run the server using
+
+        python server.py
+
+    Show the help text using
+
+        python server.py --help
+
+    """
+
+    HOST, PORT = host, port
+    print("running on %s:%d" % (HOST, PORT))
+    server.run(host=HOST, port=PORT, debug=True, threaded=threaded)
+  run()
+# =======
+# if __name__ == '__main__':
+#     server.run(debug=True, threaded=True)
+# >>>>>>> bbd4337b717eeccac4386255a5ae1e7bf564b9ca
