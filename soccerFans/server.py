@@ -103,15 +103,29 @@ def postList():
         SELECT *
         FROM posts"""
     allpost = queryMany(sql)
-    # get all names of users
-    sql = """
-    SELECT u.name
-    FROM users u, posts p
-    WHERE p.uid = u.uid"""
-    names = queryMany(sql)
+
     if allpost is None:
         abort(404)
-    return render_template('postList.html', allpost=allpost, names=names, len=len(allpost))
+    else:
+        # get all names of users
+        sql = """
+            SELECT u.name
+            FROM users u, posts p
+            WHERE p.uid = u.uid"""
+        names = queryMany(sql)
+        # get all likes
+        like_list = []
+        for post in allpost:
+            post_id_temp = post[0]
+            sql = """
+                SELECT COUNT(*)
+                FROM likes l, posts p
+                WHERE l.post_id = p.post_id AND
+                p.post_id = %s"""
+            count = queryOnewithData(sql, (post_id_temp,))
+            like_list.append(count)
+
+    return render_template('postList.html', allpost=allpost, names=names, len=len(allpost), likes=like_list)
 
 @server.route('/<int:post_id>/viewpost')
 def postView(post_id):

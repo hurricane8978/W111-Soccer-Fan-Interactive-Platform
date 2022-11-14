@@ -11,6 +11,7 @@
 						<th>Author</th>
                         <th>Posted Time</th>
                         <th>Operations</th>
+                        <th>Likes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,6 +29,7 @@
                             <a class="layui-btn layui-btn-sm" href="{{ url_for('postView', post_id=allpost[i][0]) }}">View</a>
                             <a class="layui-btn layui-btn-sm" href="{{ url_for('like', post_id=allpost[i][0]) }}">Likes</a>
                         </td>
+                        <td >{{ likes[i][0] }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
