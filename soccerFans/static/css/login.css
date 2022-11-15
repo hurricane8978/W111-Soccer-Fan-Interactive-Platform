@@ -102,7 +102,7 @@ body{
 
 .login-button{
 	width: 321px;
-    height: 51px;
+    height: 41px;
     border-radius: 4px;
 	margin-top: 20px;
     margin-left:-170px;
@@ -114,9 +114,10 @@ body{
     color:#fff;
 }
 
+
 .reg-button{
 	width: 321px;
-    height: 51px;
+    height: 41px;
     border-radius: 4px;
     background-color:#2F4F4F;
     margin-top: 20px;
@@ -130,7 +131,20 @@ body{
 
 .login-button2{
 	width: 321px;
-    height: 51px;
+    height: 41px;
+    border-radius: 4px;
+    background-color:#2F4F4F;
+    margin-left:-170px;
+    border-width:0px;
+    left:50%;
+    position:absolute;
+    top:680px;
+    color:#fff;
+}
+
+.reg-button2{
+	width: 321px;
+    height: 41px;
     border-radius: 4px;
     background-color:#2F4F4F;
     margin-left:-170px;
@@ -141,17 +155,14 @@ body{
     color:#fff;
 }
 
-.reg-button2{
-	width: 321px;
-    height: 51px;
-    border-radius: 4px;
-    background-color:#2F4F4F;
-    margin-left:-170px;
-    border-width:0px;
-    left:50%;
-    position:absolute;
-    top:560px;
-    color:#fff;
+.user-type{
+	height:41px;
+	width:301px;
+	top:560px;
+	left:50%;
+	margin-left:-170px;
+	padding-left:20px;
+	position:absolute;
 }
 
 h2{

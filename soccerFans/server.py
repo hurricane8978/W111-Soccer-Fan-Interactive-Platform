@@ -457,7 +457,7 @@ def eventsManagement(uid):
 def eventCreate(uid):
     """Create anew post for the current user."""
     if request.method == 'POST':
-        sql = """INSERT INTO create_events(host_id,event_name,description,place,regist_fee,start_time, end_time, max_capacity) VALUES 
+        sql = """INSERT INTO create_events(host_id,event_name,description,place,regist_fee,start_time, end_time, max_capacity) VALUES
                 ('%s','%s','%s','%s','%s','%s','%s','%s')""" % (uid, request.form['event_name'], request.form['description'],
                 request.form['place'],request.form['regist_fee'],request.form['start_time'],
                 request.form['end_time'],request.form['max_capacity'],)
@@ -552,8 +552,8 @@ def reg():
 
 @server.route('/fansReg',methods=['POST'])
 def fansReg():
-    sql = "INSERT INTO users(email,name,password,date_of_birth,gender,nation,user_type) VALUES ('%s','%s','%s','%s','%s','%s','host')" %(request.form['username']
-            ,request.form['name'],request.form['password'],request.form['birthday'],request.form['gender'],request.form['nation'])
+    sql = "INSERT INTO users(email,name,password,date_of_birth,gender,nation,user_type) VALUES ('%s','%s','%s','%s','%s','%s','%s')" %(request.form['username']
+            ,request.form['name'],request.form['password'],request.form['birthday'],request.form['gender'],request.form['nation'],request.form['user_type'])
     print(sql)
     execSQL(sql)
     return "<script>alert('register successfully!');window.location='fansLogin';</script>";
