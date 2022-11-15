@@ -19,34 +19,26 @@ db_name = "proj1part2"
 # config for forms
 server.config["SECRET_KEY"] = "ABC"
 
-# def queryOne(sql):
-#     try:
-#         db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
-#     except Exception as err_1:
-#         print("Oops! SQL Connection Error!")
-#     else:
-#         try:
-#             cursor = db.cursor()
-#             cursor.execute(sql)
-#         except Exception as err:
-#             print("Oops! SQL exception has occured with queryOne: ", err)
-#             print("Error Type: ", type(err))ß
-#             flash("SQL Violation")
-#             cursor.close()ß
-#             db.close()
-#         else:
-#             result = cursor.fetchone()
-#             cursor.close()
-#             db.close()
-#             return result
 def queryOne(sql):
-    db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
-    cursor = db.cursor()
-    cursor.execute(sql)
-    result = cursor.fetchone()
-    cursor.close()
-    db.close()
-    return result
+    try:
+        db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
+    except Exception as err_1:
+        print("Oops! SQL Connection Error!")
+    else:
+        try:
+            cursor = db.cursor()
+            cursor.execute(sql)
+        except Exception as err:
+            print("Oops! SQL exception has occured with queryOne: ", err)
+            print("Error Type: ", type(err))
+            flash("SQL Violation")
+            cursor.close()
+            db.close()
+        else:
+            result = cursor.fetchone()
+            cursor.close()
+            db.close()
+            return result
 
 def queryOnewithData(sql, data):
     try:
