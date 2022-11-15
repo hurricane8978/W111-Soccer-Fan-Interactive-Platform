@@ -20,106 +20,127 @@ db_name = "proj1part2"
 server.config["SECRET_KEY"] = "ABC"
 
 def queryOne(sql):
-    db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
-    cursor = db.cursor()
     try:
-        cursor.execute(sql)
-    except Exception as err:
-        print("Oops! SQL exception has occured: ", err)
-        print("Error Type: ", type(err))
-        flash("SQL Violation")
-        cursor.close()
-        db.close()
+        db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
+    except Exception as err_1:
+        print("Oops! SQL Connection Error!")
     else:
-        result = cursor.fetchone()
-        cursor.close()
-        db.close()
-        return result
-
+        try:
+            cursor = db.cursor()
+            cursor.execute(sql)
+        except Exception as err:
+            print("Oops! SQL exception has occured with queryOne: ", err)
+            print("Error Type: ", type(err))
+            flash("SQL Violation")
+            cursor.close()
+            db.close()
+        else:
+            result = cursor.fetchone()
+            cursor.close()
+            db.close()
+            return result
 
 def queryOnewithData(sql, data):
-    db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
-    cursor = db.cursor()
     try:
-        cursor.execute(sql, data)
-    except Exception as err:
-        print("Oops! SQL exception has occured: ", err)
-        print("Error Type: ", type(err))
-        flash("SQL Violation")
-        cursor.close()
-        db.close()
+        db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
+    except Exception as err_1:
+        print("Oops! SQL Connection Error!")
     else:
-        result = cursor.fetchone()
-        cursor.close()
-        db.close()
-        return result
+        try:
+            cursor = db.cursor()
+            cursor.execute(sql, data)
+        except Exception as err:
+            print("Oops! SQL exception has occured with queryOnewithData: ", err)
+            print("Error Type: ", type(err))
+            flash("SQL Violation")
+            cursor.close()
+            db.close()
+        else:
+            result = cursor.fetchone()
+            cursor.close()
+            db.close()
+            return result
 
 def queryMany(sql):
-    db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
-    cursor = db.cursor()
     try:
-        cursor.execute(sql)
-    except Exception as err:
-        print("Oops! SQL exception has occured: ", err)
-        print("Error Type: ", type(err))
-        flash("SQL Violation")
-        cursor.close()
-        db.close()
+        db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
+    except Exception as err_1:
+        print("Oops! SQL Connection Error!")
     else:
-        results = cursor.fetchall()
-        cursor.close()
-        db.close()
-        return results
+        try:
+            cursor = db.cursor()
+            cursor.execute(sql)
+        except Exception as err:
+            print("Oops! SQL exception has occured with queryMany: ", err)
+            print("Error Type: ", type(err))
+            flash("SQL Violation")
+            cursor.close()
+            db.close()
+        else:
+            result = cursor.fetchall()
+            cursor.close()
+            db.close()
+            return result
 
 def queryManywithData(sql, data):
-    db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
-    cursor = db.cursor()
     try:
-        cursor.execute(sql, data)
-    except Exception as err:
-        print("Oops! SQL exception has occured: ", err)
-        print("Error Type: ", type(err))
-        flash("SQL Violation")
-        cursor.close()
-        db.close()
+        db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
+    except Exception as err_1:
+        print("Oops! SQL Connection Error!")
     else:
-        results = cursor.fetchall()
-        cursor.close()
-        db.close()
-        return results
+        try:
+            cursor = db.cursor()
+            cursor.execute(sql, data)
+        except Exception as err:
+            print("Oops! SQL exception has occured with queryManywithData: ", err)
+            print("Error Type: ", type(err))
+            flash("SQL Violation")
+            cursor.close()
+            db.close()
+        else:
+            result = cursor.fetchall()
+            cursor.close()
+            db.close()
+            return result
 
 def execSQL(sql):
-    db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
-    cursor = db.cursor()
     try:
-        cursor.execute(sql)
-    except Exception as err:
-        print("Oops! SQL exception has occured: ", err)
-        print("Error Type: ", type(err))
-        flash("SQL Violation")
-        cursor.close()
-        db.close()
+        db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
+    except Exception as err_1:
+        print("Oops! SQL Connection Error!")
     else:
-        db.commit()
-        cursor.close()
-        db.close()
+        try:
+            cursor = db.cursor()
+            cursor.execute(sql)
+        except Exception as err:
+            print("Oops! SQL exception has occured with execSQL: ", err)
+            print("Error Type: ", type(err))
+            flash("SQL Violation")
+            cursor.close()
+            db.close()
+        else:
+            db.commit()
+            cursor.close()
+            db.close()
 
-## query with data input
 def execSQLwithData(sql, data):
-    db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
-    cursor = db.cursor()
     try:
-        cursor.execute(sql, data)
-    except Exception as err:
-        print("Oops! SQL exception has occured: ", err)
-        print("Error Type: ", type(err))
-        flash("SQL Violation")
-        cursor.close()
-        db.close()
+        db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
+    except Exception as err_1:
+        print("Oops! SQL Connection Error!")
     else:
-        db.commit()
-        cursor.close()
-        db.close()
+        try:
+            cursor = db.cursor()
+            cursor.execute(sql, data)
+        except Exception as err:
+            print("Oops! SQL exception has occured with execSQLwithData: ", err)
+            print("Error Type: ", type(err))
+            flash("SQL Violation")
+            cursor.close()
+            db.close()
+        else:
+            db.commit()
+            cursor.close()
 
 @server.route('/fansLogin')
 def fansLogin():
