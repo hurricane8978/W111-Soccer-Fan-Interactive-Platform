@@ -1,23 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-
-  <div id = "bg" class="container">
-      <h1 id="title">{% block title %}Soccer Fan Interactive Platform{% endblock %}</h1>
-      <img id="bg" src="images/main1.png" alt="show" width="700">
-      <br>
-      <br>
-      <br>
-  </div>
-
-  <div class="container">
+<body>
+    <br><br>
+    <div class="container">
     <div class="jumbotron">
 
       <h2 id="welcome">Welcome to our Soccer Fan Interactive Platform!</h2>
       <p id="introduction"> The aim of this project is to build an interactive platform for soccer fans or potential fans to share their thoughts, discuss soccer topics and participate in a variety of  exciting events for the upcoming 2022 QATAR World Cup. Specifically, it allows users to follow each other, post/comment on any soccer topics, give a upvote/downvote to posts, vote for their favorite teams and  join the latest activities. In addition, the city host or certified organizations are also welcome to publish or share events for its fans  to participate and celebrate this long-awaited and quadrennial moment. Last but not least, If you have any question or feedback for this platform, you are free to send messages to the webmaster.</p>
     </div>
   </div>
+
+  <div class="text-center">
+    <div class="center">
+      <img src="images/main1.png" class="img-fluid" alt="show" width=700>
+      <br>
+      <br>
+    </div>
+  </div>
+
+<div class="d-flex">
+  <hr class="my-auto flex-grow-1">
+  <div class="px-4">*</div>
+  <hr class="my-auto flex-grow-1">
+</div>
+
+<div class="text-center">
+  <h1>FIFA World Cup 2022 Stadiums</h1>
+
+</div>
   <div class="text-center">
     <div class="center">
       <img src="images/Qatar-2022-s-32-teams-graphic.webp" class="img-fluid" alt="show" width=700>
@@ -34,18 +45,18 @@
     </div>
   </div>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Stage</th>
-        <th scope="col">Period</th>
+        <div class="layui-form" style="width:80%;margin-left:10%;">
+            <table class="layui-table" id="mytable">
+                <thead>
+                    <tr>
+					    <th scope="col">#</th>
+                        <th scope="col">Stage</th>
+                        <th scope="col">Period</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-      </tr>
-    </thead>
-    <tbody>
-
-      <tr>
+                     <tr>
         <th scope="row">1</th>
         <td>Group stage</td>
         <td>Nov. 20-Dec. 2</td>
@@ -77,18 +88,25 @@
         <td>Final</td>
         <td>Dec. 18</td>
       </tr>
-    </tbody>
-  </table>
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+<div class="d-flex">
+  <hr class="my-auto flex-grow-1">
+  <div class="px-4">*</div>
+  <hr class="my-auto flex-grow-1">
+</div>
 
 <div class="text-center">
   <h1>FIFA World Cup 2022 Stadiums</h1>
-
 </div>
 
-
-
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
+    <div id="carouselExampleIndicators" class="carousel slide w-100" data-ride="carousel">
+    <ol class="carousel-indicators mx-auto">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
@@ -100,7 +118,7 @@
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active img-fluid">
-            <img class="d-block w-100" src="images/stadium1.png"  alt="First slide" style="width:300px;height:440px">
+            <img class="d-block w-100 mx-auto" src="images/stadium1.png"  alt="First slide" style="width:300px;height:800px">
             <div class="carousel-caption d-none d-md-block">
                 <h5 style="color :white; ">fontLusail Stadium </h5>
                 <p>Capacity: 80,000 seats | Opening: 2022</p>
@@ -108,14 +126,14 @@
         </div>
 
         <div class="carousel-item">
-            <img class="d-block w-100" src="images/stadium2.png"  alt="Second slide" style="width:300px;height:440px">
+            <img class="d-block w-100" src="images/stadium2.png"  alt="Second slide" style="width:300px;height:800px">
             <div class="carousel-caption d-none d-md-block">
                 <h5 style="color :white;">Al Bayt Stadium</h5>
                 <p>Capacity: 60,000 seats | Opening: 2021</p>
             </div>
         </div>
         <div class="carousel-item">
-            <img class="d-block w-100" src="images/stadium3.png"  alt="Third slide" style="width:300px;height:440px">
+            <img class="d-block w-100" src="images/stadium3.png"  alt="Third slide" style="width:300px;height:800px">
             <div class="carousel-caption d-none d-md-block">
               <h5 style="color :white;">Al Janoub Stadium </h5>
               <p>Capacity: 40,000 seats | Opening: 2019</p>
@@ -123,7 +141,7 @@
         </div>
 
         <div class="carousel-item">
-            <img class="d-block w-100" src="images/stadium4.png"  alt="First slide" style="width:300px;height:440px">
+            <img class="d-block w-100" src="images/stadium4.png"  alt="First slide" style="width:300px;height:800px">
             <div class="carousel-caption d-none d-md-block">
               <h5 style="color :white;">Ahmad Bin Ali Stadium</h5>
               <p>Capacity: 40,000 seats | Opening: 2020</p>
@@ -131,7 +149,7 @@
         </div>
 
         <div class="carousel-item">
-            <img class="d-block w-100" src="images/stadium5.png"  alt="First slide" style="width:300px;height:440px">
+            <img class="d-block w-100" src="images/stadium5.png"  alt="First slide" style="width:300px;height:800px">
             <div class="carousel-caption d-none d-md-block">
               <h5 style="color :white;">Khalifa International Stadium</h5>
               <p>Capacity: 40,000 seats | Opening: 1976</p>
@@ -139,7 +157,7 @@
         </div>
 
         <div class="carousel-item">
-            <img class="d-block w-100" src="images/stadium6.png"  alt="First slide" style="width:300px;height:440px">
+            <img class="d-block w-100" src="images/stadium6.png"  alt="First slide" style="width:300px;height:800px">
             <div class="carousel-caption d-none d-md-block">
               <h5 style="color :white;">Education City Stadium</h5>
               <p>Capacity: 40,000 seats | Opening: 2020</p>
@@ -147,7 +165,7 @@
         </div>
 
         <div class="carousel-item">
-            <img class="d-block w-100" src="images/stadium7.png"  alt="First slide" style="width:300px;height:440px">
+            <img class="d-block w-100" src="images/stadium7.png"  alt="First slide" style="width:300px;height:800px">
             <div class="carousel-caption d-none d-md-block">
               <h5 style="color :white;">Stadium 974 </h5>
               <p>Capacity: 40,000 seats | Opening: 2021</p>
@@ -155,7 +173,7 @@
         </div>
 
         <div class="carousel-item">
-            <img class="d-block w-100" src="images/stadium8.png"  alt="First slide" style="width:300px;height:440px">
+            <img class="d-block w-100" src="images/stadium8.png"  alt="First slide" style="width:300px;height:800px">
             <div class="carousel-caption d-none d-md-block">
               <h5 style="color :white;">Al Thumama Stadium  </h5>
               <p>Capacity: 40,000 seats | Opening: 2021</p>
@@ -175,17 +193,9 @@
       </a>
 </div>
 
+    <br><br>
 
-
-
-
-
-
-
-
-
-
-
+</body>
 
 	<script>
 	layui.use('laydate', function(){

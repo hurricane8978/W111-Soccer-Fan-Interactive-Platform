@@ -480,6 +480,7 @@ def quit():
     session['user_id'] = 0
     return render_template('quit.html')
 
+# account info
 @server.route('/<int:uid>-user')
 def user(uid):
     sql = "select * from v_users where uid = '%s'"
@@ -517,9 +518,8 @@ if __name__ == "__main__":
 
     HOST, PORT = host, port
     print("running on %s:%d" % (HOST, PORT))
-    server.run(host=HOST, port=PORT, debug=True, threaded=threaded)
+    server.run(host=HOST, port=PORT, debug=True, threaded=True)
   run()
 # =======
 # if __name__ == '__main__':
 #     server.run(debug=True, threaded=True)
-# >>>>>>> bbd4337b717eeccac4386255a5ae1e7bf564b9ca
