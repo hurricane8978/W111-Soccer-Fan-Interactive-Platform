@@ -149,10 +149,8 @@ def execSQLwithData(sql, data):
         else:
             db.commit()
             cursor.close()
-<<<<<<< HEAD
             db.close()
-=======
->>>>>>> 4187f6e1d45c3134db8eb20af141d8daf6965c85
+
 
 @server.route('/fansLogin')
 def fansLogin():
