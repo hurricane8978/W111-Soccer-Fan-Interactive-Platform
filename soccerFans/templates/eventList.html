@@ -2,6 +2,9 @@
 
 {% block content %}
     <div class="layui-layout layui-layout-admin">
+    		<fieldset class="layui-elem-field layui-field-title" style="width:80%;margin-left:10%;margin-top: 30px;">
+		        <legend>Events Overview</legend>
+		    </fieldset>
         <div class="layui-form" style="width:80%;margin-left:10%;">
             <table class="layui-table" id="mytable">
                 <thead>
@@ -31,7 +34,7 @@
                                 </div>
                             {% endif %}
                             <div class="row">
-                            <a class="layui-btn layui-btn-sm" href="#">Join</a>
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('eventJoin', event_id=allevents[i][0]) }}">Join</a>
                             </div>
                         </td>
                     </tr>
@@ -39,6 +42,45 @@
                 </tbody>
             </table>
         </div>
+
+    <!-- my joined events-->
+        <fieldset class="layui-elem-field layui-field-title" style="width:80%;margin-left:10%;margin-top: 30px;">
+		    <legend>My Joined Events</legend>
+		</fieldset>
+
+        <div class="layui-form" style="width:80%;margin-left:10%;">
+            <table class="layui-table" id="mytable">
+                <thead>
+                    <tr>
+					    <th>Event ID</th>
+                        <th>Title</th>
+						<th>Host</th>
+                        <th>Description</th>
+                        <th>Event Time</th>
+                        <th>Capacity</th>
+                        <th>Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for i in range(0, len_1) %}
+                    <tr>
+						<td style="width:140px;"><a>{{ myjoined[i][0] }}</a></td>
+                        <td >{{ myjoined[i][2] }}</td>
+                        <td>{{ myjoined[i][-1] }}</td>
+                        <td style="width:140px;">{{ myjoined[i][3] }}</td>
+                        <td style="width:140px;">{{ myjoined[i][-4] }} to {{ myjoined[i][-3] }}</td>
+                        <td>{{ myjoined[i][-2] }}</td>
+                        <td style="width:200px;">
+                            <div class="row">
+                            <a class="layui-btn layui-btn-sm" href="{{ url_for('eventDisjoint', event_id=myjoined[i][0]) }}">Dis-join</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </br></br>
     </div>
     <script>
         layui.use('element', function () {

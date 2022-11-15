@@ -329,6 +329,7 @@ def QA():
 
 @server.route('/events')
 def eventList():
+    user_id = session['user_id']
     sql = """
             SELECT *
             FROM create_events"""
@@ -343,9 +344,15 @@ def eventList():
                 FROM users u, create_events e
                 WHERE e.host_id = u.uid"""
         names = queryMany(sql)
-        # get all likes
+        # get all joined events
+        sql = """
+        SELECT c.*, u.name
+        FROM join_events j, create_events c, users u
+        WHERE j.uid = %s AND j.event_id = c.event_id AND c.host_id = u.uid"""
+        myjoined = queryManywithData(sql, (user_id,))
 
-    return render_template('eventList.html', allevents=allevents, names=names, len=len(allevents))
+    return render_template('eventList.html', allevents=allevents, names=names,
+                           len=len(allevents), len_1=len(myjoined), myjoined=myjoined)
 
 @server.route('/<int:uid>-eventsManagement')
 def eventsManagement(uid):
@@ -382,6 +389,10 @@ def eventDelete(event_id):
     #if event exists
     if event:
         if form.validate_on_submit():
+            sql = """
+                DELETE FROM join_events WHERE event_id = %s
+                            """
+            execSQLwithData(sql, (event_id, ))
 
             sql = """
                     DELETE FROM create_events WHERE event_id = %s AND host_id = %s
@@ -395,6 +406,40 @@ def eventDelete(event_id):
     else:
         flash("Event not Found!")
     return redirect(url_for("eventsManagement", uid=user_id))
+
+
+@server.route('/<int:event_id>-joinevent', methods=['GET', 'POST'])
+def eventJoin(event_id):
+    user_id = session["user_id"]
+    event = queryOnewithData("SELECT * FROM create_events WHERE event_id = %s", (event_id, ))
+    #if event exists
+    if event:
+        sql = """
+        INSERT INTO join_events(uid, event_id) VALUES ('%s', '%s')
+        """
+        execSQLwithData(sql, (user_id, event_id, ))
+
+        flash("Joined Event!")
+        return redirect(url_for("eventList"))
+    else:
+        flash("Event not Found!")
+    return redirect(url_for("eventList"))
+
+@server.route('/<int:event_id>-disjoinevent', methods=['GET', 'POST'])
+def eventDisjoint(event_id):
+    user_id = session["user_id"]
+    event = queryOnewithData("SELECT * FROM join_events WHERE event_id = %s AND uid = %s", (event_id, user_id,))
+    #if event exists
+    if event:
+        sql = """
+        DELETE FROM join_events WHERE event_id = %s AND uid = %s
+        """
+        execSQLwithData(sql, (event_id, user_id, ))
+        flash("Dis-joined Event!")
+        return redirect(url_for("eventList"))
+    else:
+        flash("Event not Found!")
+    return redirect(url_for("eventList"))
 
 @server.route('/checkFansLogin',  methods=['POST'])
 def checkFansLogin():
