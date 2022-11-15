@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="layui-layout layui-layout-admin">
+
+		<a type="button" class="layui-btn layui-btn-normal" style="margin-top:20px;margin-left:10%;" href="{{ url_for('createQA') }}">
+            <i class="layui-icon" ></i> Ask Question </a>
+
+        <div class="layui-form" style="width:80%;margin-left:10%;">
+            <table class="layui-table" id="mytable">
+                <thead>
+                    <tr>
+					    <th>Title</th>
+                        <th>Question</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for qa in allqa %}
+                    <tr>
+						<td >{{ qa[0] }}</td>
+                        <td >{{ qa[1] }}</td>
+                    </tr>
+                   {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+    </script>
+{% endblock %}

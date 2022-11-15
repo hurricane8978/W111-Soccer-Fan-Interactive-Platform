@@ -10,7 +10,6 @@ from flask import flash
 class Postform(FlaskForm):
     title = StringField('title', validators=(DataRequired(), length(max=100), ))
     post = TextAreaField('post', validators=(DataRequired(), length(max=200), ))
-    # date = DateField('Date', format='%Y-%m-%d', validators=(DataRequired(),))
     submit = SubmitField('submit posts')
 
 class DeletePostForm(FlaskForm):
@@ -22,3 +21,9 @@ class Commentform(FlaskForm):
 
 class DeleteEventForm(FlaskForm):
     submit = SubmitField('Delete')
+
+class qaform(FlaskForm):
+    title = StringField('title', validators=(DataRequired(), length(max=100),))
+    content = TextAreaField('content', validators=(DataRequired(), length(max=200),))
+    submit = SubmitField('submit QA')
+

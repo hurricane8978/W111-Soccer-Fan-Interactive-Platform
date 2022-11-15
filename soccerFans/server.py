@@ -325,7 +325,37 @@ def aboutUs():
 
 @server.route('/qa')
 def QA():
-    return render_template('aboutUs.html')
+    sql = """
+            SELECT title, content
+            FROM raise_questions"""
+    allqa = queryMany(sql)
+
+    if allqa is None:
+        abort(404)
+    else:
+        return render_template('qa.html', allqa=allqa)
+
+@server.route('/qa-create', methods=['GET', 'POST'])
+def createQA():
+    """Create a new post for the current user."""
+    user_id = session["user_id"]
+    form = forms.qaform()
+
+    if form.validate_on_submit():
+        title = form.title.data
+        content = form.content.data
+        # serial not working...
+        max_question_id = queryOne('SELECT max(question_id) max_question_id From raise_questions')[0]
+        question_id = max_question_id + 1
+        sql = """
+        INSERT INTO raise_questions (question_id, uid, title, content) VALUES (%s, %s, %s, %s);"""
+        data = (question_id, user_id, title, content, )
+        execSQLwithData(sql, data)
+
+        flash('Question Submitted!')
+        return redirect(url_for("QA"))
+
+    return render_template('qa_create.html', form=form, user_id=user_id)
 
 @server.route('/events')
 def eventList():
