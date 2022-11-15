@@ -328,48 +328,73 @@ def QA():
     return render_template('aboutUs.html')
 
 @server.route('/events')
-def events():
-    #results = queryMany(sql)
-    # follows = []
-    # for r in results:
-        # follow = {}
-        # follow['user_id'] = r[0]
-        # follow['name'] = r[1]
-        # follows.append(follow)
-    return render_template('events.html')
-
-@server.route('/comments')
-def comments():
-    #results = queryMany(sql)
-    # follows = []
-    # for r in results:
-        # follow = {}
-        # follow['user_id'] = r[0]
-        # follow['name'] = r[1]
-        # follows.append(follow)
-    return render_template('comments.html')
-
-@server.route('/eventList')
 def eventList():
-    #results = queryMany(sql)
-    # follows = []
-    # for r in results:
-        # follow = {}
-        # follow['user_id'] = r[0]
-        # follow['name'] = r[1]
-        # follows.append(follow)
-    return render_template('eventList.html')
+    sql = """
+            SELECT *
+            FROM create_events"""
+    allevents = queryMany(sql)
 
-@server.route('/eventsManagement')
-def eventsManagement():
-    #results = queryMany(sql)
-    # follows = []
-    # for r in results:
-        # follow = {}
-        # follow['user_id'] = r[0]
-        # follow['name'] = r[1]
-        # follows.append(follow)
-    return render_template('eventsManagement.html')
+    if allevents is None:
+        abort(404)
+    else:
+        # get all names of users
+        sql = """
+                SELECT u.name
+                FROM users u, create_events e
+                WHERE e.host_id = u.uid"""
+        names = queryMany(sql)
+        # get all likes
+
+    return render_template('eventList.html', allevents=allevents, names=names, len=len(allevents))
+
+@server.route('/<int:uid>-eventsManagement')
+def eventsManagement(uid):
+    sql = """
+    SELECT *
+    FROM create_events
+    WHERE host_id = %s""" % (str(uid))
+    myevents = queryMany(sql)
+    if myevents is None:
+        abort(404)
+    return render_template('eventsManagement.html', myevents=myevents)
+
+
+@server.route('/<int:uid>-createevent', methods=['POST', 'GET'])
+def eventCreate(uid):
+    """Create anew post for the current user."""
+    if request.method == 'POST':
+        sql = """INSERT INTO create_events(host_id,event_name,description,place,regist_fee,start_time, end_time, max_capacity) VALUES 
+                ('%s','%s','%s','%s','%s','%s','%s','%s')""" % (uid, request.form['event_name'], request.form['description'],
+                request.form['place'],request.form['regist_fee'],request.form['start_time'],
+                request.form['end_time'],request.form['max_capacity'],)
+        execSQL(sql)
+        flash('Event Created!')
+        return redirect(url_for("eventsManagement", uid=uid))
+
+    return render_template('eventcreate.html', uid=uid)
+
+
+@server.route('/<int:event_id>-deleteevent', methods=['GET', 'POST'])
+def eventDelete(event_id):
+    user_id = session["user_id"]
+    form = forms.DeleteEventForm()
+    event = queryOnewithData("SELECT * FROM create_events WHERE event_id = %s", (event_id, ))
+    #if event exists
+    if event:
+        if form.validate_on_submit():
+
+            sql = """
+                    DELETE FROM create_events WHERE event_id = %s AND host_id = %s
+                """
+            execSQLwithData(sql, (event_id, user_id, ))
+
+            flash("Deleted your events and all joins!")
+            return redirect(url_for("eventsManagement", uid=user_id))
+        title = event[2]
+        return render_template('eventdelete.html', form=form, event_id=event_id, title=title)
+    else:
+        flash("Event not Found!")
+    return redirect(url_for("eventsManagement", uid=user_id))
 
 @server.route('/checkFansLogin',  methods=['POST'])
 def checkFansLogin():
@@ -380,6 +405,8 @@ def checkFansLogin():
     else:
         session['user_id'] = result[0]
         session['name'] = result[2]
+        # add user type
+        session['user_type'] = result[-1]
 
         return "<script>alert('Logged In!');window.location='/';</script>";
 
@@ -391,7 +418,6 @@ def reg():
 def fansReg():
     sql = "INSERT INTO users(email,name,password,date_of_birth,gender,nation,user_type) VALUES ('%s','%s','%s','%s','%s','%s','host')" %(request.form['username']
             ,request.form['name'],request.form['password'],request.form['birthday'],request.form['gender'],request.form['nation'])
-    print(sql)
     execSQL(sql)
     return "<script>alert('register successfully!');window.location='fansLogin';</script>";
 

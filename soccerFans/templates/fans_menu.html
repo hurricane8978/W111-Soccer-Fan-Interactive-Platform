@@ -20,8 +20,8 @@
 	{% else %}
 	<li class="layui-nav-item"><a href="javascript:void(0);">Events</a>
 		<dl class="layui-nav-child">
-            <dd><a href="eventsManagement">Manage Events</a></dd>
-            <dd><a href="eventList">Events List</a></dd>
+            <dd><a href="{{ url_for('eventsManagement', uid=session['user_id']) }}">Manage Events</a></dd>
+            <dd><a href="{{ url_for('eventList') }}">Events List</a></dd>
         </dl>
 	</li>
 	

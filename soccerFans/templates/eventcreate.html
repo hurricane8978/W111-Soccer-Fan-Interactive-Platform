@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="layui-layout layui-layout-admin">
+            <form class="layui-form" action="{{ url_for('eventCreate', uid=session["user_id"]) }}" method="post" id="form" name="event_form">
+                <!-- event title -->
+                <div class="layui-form-item">
+                    <label for="event_name" class="layui-form-label">Title</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="event_name" id="event_name" autocomplete="off" placeholder="event title" class="layui-input">
+                    </div>
+                </div>
+                <!-- event content -->
+                <div class="layui-form-item">
+                    <label for="description" class="layui-form-label">Description</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="description" id="description" autocomplete="off" placeholder="event description" class="layui-input">
+                    </div>
+                </div>
+                <!-- event place -->
+                <div class="layui-form-item">
+                    <label for="place" class="layui-form-label">Place</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="place" id="place" autocomplete="off" placeholder="event place" class="layui-input">
+                    </div>
+                </div>
+                <!-- event fee -->
+                <div class="layui-form-item">
+                    <label for="regist_fee" class="layui-form-label">Fee</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="regist_fee" id="regist_fee" autocomplete="off" placeholder="$" class="layui-input">
+                    </div>
+                </div>
+                <!-- start and end time -->
+                <div class="layui-inline">
+                    <label for="start_time" class="layui-form-label">Start Date</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="start_time" id="start_time" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label for="end_time" class="layui-form-label">End Date</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="end_time" id="end_time" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!-- event capacity -->
+                <div class="layui-form-item">
+                    <label for="max_capacity" class="layui-form-label">Capacity</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="max_capacity" id="max_capacity" autocomplete="off" placeholder="#" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-primary is-small">Save</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+	<script>
+	layui.use('laydate', function(){
+	  var laydate = layui.laydate;
+	  laydate.render({
+	    elem: '#start_time'
+	    ,format: 'yyyy-MM-dd'
+      });
+      laydate.render({
+	    elem: '#end_time'
+	    ,format: 'yyyy-MM-dd'
+      });
+	layui.use('form', function(){
+		var form = layui.form
+		form.render();
+	});
+	layui.use('element', function(){
+		var element = layui.element;
+		element.init()
+	});
+});
+</script>
+{% endblock %}

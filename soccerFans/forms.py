@@ -19,3 +19,6 @@ class Commentform(FlaskForm):
     anonymous = RadioField('anonymous ', choices=[('Unanonymous','Unanonymous'),('Anonymous','Anonymous')], default='Unanonymous')
     comment = TextAreaField('post', validators=(DataRequired(), length(max=200), ))
     submit = SubmitField('submit conmment')
+
+class DeleteEventForm(FlaskForm):
+    submit = SubmitField('Delete')
