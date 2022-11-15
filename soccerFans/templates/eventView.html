@@ -1,70 +1,23 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>an interactive platform for soccer fans or potential fans</title>
-    <link rel="stylesheet" href="layui-2.6.5/src/css/layui.css">
-    <link rel="stylesheet" href="css/event.css">
-    <link rel="stylesheet" href="layui/css/modules/layer/default/layer.css">
-    <script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
-    <script src="layui-2.6.5/src/layui.js" charset="utf-8"></script>
-    <script src="layui-2.6.5/src/modules/layer.js"></script>
-</head>
+{% extends 'base.html' %}
+{% block content %}
 <body>
     <div class="layui-layout layui-layout-admin">
-        {% include "fans_menu.html"  %}
 
         <div class="event-container">
-            <h1 style="display:inline;">Liver Pool vs Manchester City</h1>
-            <h3 style="display:inline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;John edited in 2022-06-17</h3>
-            <div style="float:right;margin-top:20px;margin-right:5%;">
-                Number of participants:<span id="collection_times">32</span>
-            </div>
+            <h1>{{event.name}}</h1>
+            <h3 style="display:inline;">{{event.host}} edited</h3>
             <hr class="layui-bg-green">
             <div style="margin-left:5%;display:inline;">
-                <span class="layui-badge layui-bg-blue">Premier League</span>
-                <span class="layui-badge layui-bg-green">Erling Haaland</span>
-                <span class="layui-badge layui-bg-green">Mohamed Salah</span>
+                <span class="layui-badge layui-bg-blue">{{event.place}}</span>
             </div>
             <div id="sc_no" style="float:right;margin-top:20px;margin-right:5%;display:inline;">
-                <span style="color:#0094ff;" id="sc_label" onclick="collect_click()"><i class="layui-icon layui-icon-rate"></i>点击参与</span>
+                <span style="color:#0094ff;" id="sc_label" onclick="collect_click()"><i class="layui-icon layui-icon-rate"></i>paricipate</span>
             </div>
 
             <div id="event_div">
-                Liverpool and Manchester City are both on a winning streak, so tomorrow's game is going to be very exciting. 
+                {{event.description}}
 				<h4>Guys, please comment below.!!!!!!!</h4>
             </div>
-
-
-
-            <div style="margin-left:5%;margin-right:5%;margin-bottom:40px;width:90%;">
-                <h4>comment here<button id="btn" class="btn btn-sm btn-default" style="background-image:url(images/emoji.png);width:34px;height:36px;margin-left:10px;">&nbsp;</button></h4>
-                <div id="editor" contenteditable="true"></div>
-
-                <div class="m-t-70">
-                    <button onclick='eva()' class="btn btn-primary m-t-70" id="btnLoad2" style="margin-top:20px;">submit</button>
-                </div>
-            </div>
-
-
-            <h1>Comments</h1>
-            <hr class="layui-bg-green">
-
-			<div style="float:left;">
-				<img src="images/default.png" class="layui-nav-img">
-			</div>
-			<div style="float:left;width:700px;">
-				<p>C. Puth</p>
-				<div>
-					I guess that Manchester City would win the match and Haaland would score three goals.
-				</div>
-				<div style="margin-top:30px;color:#ddd;">
-					2022-06-18 12:00:00<a href="javascript:void(0);" style="margin-left:20px;" onclick="">reply</a>
-				</div>
-				<hr class="layui-bg-green">
-			</div>
-
-
 
         </div>
     </div>
@@ -75,8 +28,4 @@
             var element = layui.element;
         });
     </script>
-    <script>
-
-    </script>
-</body>
-</html>
+{% endblock %}

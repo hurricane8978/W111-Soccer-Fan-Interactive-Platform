@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+
+		<h3 style="width:80%;margin-left:10%;margin-top:40px;text-align: center;">Below are your votes.</h3>
+		<hr class="layui-border-cyan" style="width:80%;margin-left:10%;">
+		<form class="layui-form" action="voteTeams" method="post">
+			<div class="layui-form" style="width:80%;margin-left:10%;">
+						{% for team in teams %}
+						<div class="group-div">
+							<div class="team-div">
+								<input type="checkbox" lay-filter="numCheck" name="{{team}}" lay-skin="primary" title="{{team}}" checked="checked" disabled>
+								<img src="images/icons/{{team}}.png" class="team-icon">
+							</div><br>
+						</div>
+						{% endfor %}
+			</div>
+		</form>
+
+		<h3 style="width:80%;margin-left:10%;margin-top:40px;text-align: center;">Vote Result</h3>
+		<hr class="layui-border-cyan" style="width:80%;margin-left:10%;">
+		<h4>Group A:</h4>
+
+		<div class="group-div">
+			<div class="team-div2"><img src="images/icons/qatar.png" class="team-icon">Qatar:{{dict_count.Qatar}}</div>
+			<div class="team-div2"><img src="images/icons/Senegal.png" class="team-icon">Senegal:{{dict_count.Senegal}}</div>
+      <div class="team-div2"><img src="images/icons/Ecuador.png" class="team-icon">Ecuador:{{dict_count.Ecuador}}</div>
+      <div class="team-div2"><img src="images/icons/Netherland.png" class="team-icon">Netherlands:{{dict_count.Netherlands}}</div>
+		</div>
+		<h4>Group B:</h4>
+		<div class="group-div">
+      <div class="team-div2"><img src="images/icons/England.png" class="team-icon">England:{{dict_count.England}}</div>
+			<div class="team-div2"><img src="images/icons/iran.png" class="team-icon">IR Iran:{{dict_count.IRIran}}</div>
+      <div class="team-div2"><img src="images/icons/USA.png" class="team-icon">USA':{{dict_count.USA}}</div>
+      <div class="team-div2"><img src="images/icons/Wales.png" class="team-icon">Wales:{{dict_count.Wales}}</div>
+		</div>
+
+		<h4>Group C:</h4>
+		<div class="group-div">
+      <div class="team-div2"><img src="images/icons/Argentina.png" class="team-icon">Argentina:{{dict_count.Argentina}}</div>
+			<div class="team-div2"><img src="images/icons/Saudi Arabia.png" class="team-icon">SaudiArabia:{{dict_count.SaudiArabia}}</div>
+      <div class="team-div2"><img src="images/icons/Mexico.png" class="team-icon">Mexico:{{dict_count.Mexico}}</div>
+      <div class="team-div2"><img src="images/icons/Poland.png" class="team-icon">Poland:{{dict_count.Poland}}</div>
+		</div>
+
+
+		<h4>Group D:</h4>
+		<div class="group-div">
+      <div class="team-div2"><img src="images/icons/France.png" class="team-icon">France:{{dict_count.France}}</div>
+			<div class="team-div2"><img src="images/icons/Australia.png" class="team-icon">Australia:{{dict_count.Australia}}</div>
+      <div class="team-div2"><img src="images/icons/Denmark.png" class="team-icon">Denmark:{{dict_count.Denmark}}</div>
+      <div class="team-div2"><img src="images/icons/Tunisia.png" class="team-icon">Tunisia:{{dict_count.Tunisia}}</div>
+		</div>
+
+		<h4>Group E:</h4>
+		<div class="group-div">
+      <div class="team-div2"><img src="images/icons/Spain.png" class="team-icon">Spain:{{dict_count.Spain}}</div>
+			<div class="team-div2"><img src="images/icons/Costa_Rica.png" class="team-icon">CostaRica:{{dict_count.CostaRica}}</div>
+      <div class="team-div2"><img src="images/icons/German.png" class="team-icon">Germany:{{dict_count.Germany}}</div>
+      <div class="team-div2"><img src="images/icons/Japan.png" class="team-icon">Japan:{{dict_count.Japan}}</div>
+		</div>
+
+
+		<h4>Group F:</h4>
+		<div class="group-div">
+      <div class="team-div2"><img src="images/icons/Belgium.png" class="team-icon">Belgium:{{dict_count.Belgium}}</div>
+			<div class="team-div2"><img src="images/icons/Canada.png" class="team-icon">Canada:{{dict_count.Canada}}</div>
+      <div class="team-div2"><img src="images/icons/Morocco.png" class="team-icon">Morocco:{{dict_count.Morocco}}</div>
+      <div class="team-div2"><img src="images/icons/Croatia.png" class="team-icon">Croatia:{{dict_count.Croatia}}</div>
+		</div>
+
+
+		<h4>Group G:</h4>
+		<div class="group-div">
+      <div class="team-div2"><img src="images/icons/Brazil.png" class="team-icon">Brazil:{{dict_count.Brazil}}</div>
+			<div class="team-div2"><img src="images/icons/Serbia.png" class="team-icon">Serbia:{{dict_count.Serbia}}</div>
+      <div class="team-div2"><img src="images/icons/Switzerland.png" class="team-icon">Ecuador:{{dict_count.Switzerland}}</div>
+      <div class="team-div2"><img src="images/icons/Cameroon.png" class="team-icon">Cameroon:{{dict_count.Cameroon}}</div>
+		</div>
+
+
+		<h4>Group H:</h4>
+		<div class="group-div">
+      <div class="team-div2"><img src="images/icons/Portugal.png" class="team-icon">Portugal:{{dict_count.Portugal}}</div>
+			<div class="team-div2"><img src="images/icons/Ghana.png" class="team-icon">Ghana:{{dict_count.Ghana}}</div>
+      <div class="team-div2"><img src="images/icons/Uruguay.png" class="team-icon">Uruguay:{{dict_count.Uruguay}}</div>
+      <div class="team-div2"><img src="images/icons/Korea.png" class="team-icon">Korea Republic:{{dict_count.KoreaRepublic}}</div>
+
+		</div>
+    </div>
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+		layui.use('form', function () {
+            var form = layui.form;
+
+			form.on('checkbox(numCheck)',function(data){
+				if(data.elem.checked){
+					if($('input[type=checkbox]:checked').length>3){
+						alert("At most 3 options!!!!!!");
+						$(this).prop("checked", false);
+						form.render();
+					}
+				}
+			})
+
+            form.render();
+        });
+    </script>
+	</body>
+{% endblock %}

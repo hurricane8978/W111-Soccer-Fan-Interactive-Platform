@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 <script src="layui-2.6.5/src/layui.js" charset="utf-8"></script>
 </head>
 <body>
-	<div class="user-login" style="height:690px;"></div>
+	<div class="user-login" style="height:800px;"></div>
 	<h2 style="margin-left:-150px;">Fans Register</h2>
 
 	<form class="layui-form" action="fansReg" method="post" id="form">
@@ -41,6 +41,15 @@
 
 		<input type="text" name="birthday" placeholder="Please input your Birthday" id="birthday" class="user-birthday">
 
+		<div class="user-type" style="margin-left:-250px;">
+			<label class="layui-form-label" style="color:#fff;">User type</label>
+			<div class="layui-input-block" style="width:270px;">
+				<select class="layui-input" name="gender" >
+					<option>fans</option>
+					<option>host</option>
+				</select>
+			</div>
+		</div>
 
 		<button type="button" class="reg-button2" id="reg_btn">Register</button>
 		<button type="button" class="login-button2" onclick="javascript:window.location.href='fansLogin';">Login</button>

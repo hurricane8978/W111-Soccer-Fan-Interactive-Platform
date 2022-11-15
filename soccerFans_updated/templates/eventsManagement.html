@@ -1,0 +1,43 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+		
+		<a class="layui-btn layui-btn-normal" href="createEvents" style="margin-top:20px;margin-left:10%;"><i class="layui-icon"></i> Create a new event</a>
+		
+        <div class="layui-form" style="width:80%;margin-left:10%;">
+            <table class="layui-table" id="mytable">
+                <thead>
+                    <tr>
+					    <th>event_id</th>
+                        <th>name</th>
+						<th>host</th>
+                        <th>start_time</th>
+						<th>end_time</th>
+                        <th>operate</th>
+                    </tr>
+                </thead>
+                <tbody>
+					{% for event in events %}
+                    <tr>
+						<td style="width:80px;">{{event.event_id}}</td>
+                        <td><a href="eventView?event_id={{event.event_id}}">{{event.event_name}}</a></td>
+                        <td style="width:140px;">{{event.name}}</td>
+						<td style="width:140px;">{{event.start_time}}</td>
+						<td style="width:140px;">{{event.end_time}}</td>
+                        <td style="width:200px;">
+                            <a class="layui-btn layui-btn-sm" href="2">delete</a>
+							<a class="layui-btn layui-btn-sm" href="2">edit</a>
+                        </td>
+                    </tr>
+                   {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,38 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+
+		
+        <div class="layui-form" style="width:80%;margin-left:10%;">
+            <table class="layui-table" id="mytable">
+                <thead>
+                    <tr>
+					    <th>comment_id</th>
+                        <th>comment</th>
+                        <th>create_time</th>
+                        <th>operate</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+						<td style="width:140px;">1</a></td>
+                        <td >arrived at L.A.</td>
+                        <td style="width:140px;">2022-11-13 12:00:00</td>
+                        <td style="width:200px;">
+                            <a class="layui-btn layui-btn-sm" href="2">delete</a>
+                        </td>
+                    </tr>
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+    </script>
+</body>
+{% endblock %}

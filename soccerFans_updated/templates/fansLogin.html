@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>an interactive platform for soccer fans or potential fans</title>
+<link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+	
+	<div class="user-login"></div>
+	<h2>Soccer Fans Login</h2>
+		<form class="layui-form" action="checkFansLogin" method="post">
+		  <div class="layui-form-item layui-col-xs12">
+		    <div class="layui-input-block">
+		      <input type="text" name="username" placeholder="Please input your username" class="user-username">
+		    </div>
+		  </div>
+		  <div class="layui-form-item layui-col-xs12">
+		    <div class="layui-input-block">
+		      <input type="password" name="password" placeholder="Please input your password" class="user-password">
+		    </div>
+		  </div>
+		  <div class="layui-form-item layui-col-xs10">
+		  	<button type="submit" class="login-button">login</button>
+		  	<button type="button" class="reg-button" onclick="javascript:window.location.href='reg';">register</button>
+		  </div>
+		  <a class="other-a" href="hostLogin">Please click here if you are a host.</a>
+		</form>
+
+</body>
+</html>

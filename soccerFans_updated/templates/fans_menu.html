@@ -1,10 +1,28 @@
 <ul class="layui-nav layui-bg-green">
-    <li class="layui-nav-item"><a href="user">the World Cup</a></li>
+    <li class="layui-nav-item"><a href="/">Home</a></li>
 	
-	
+	{% if session['user_id'] == 0  %}
 	<li class="layui-nav-item"><a href="javascript:void(0);">Events</a>
 		<dl class="layui-nav-child">
-            <dd><a href="eventsManagement">EventsManagement</a></dd>
+            <dd><a href="eventList">EventsList</a></dd>
+        </dl>
+	</li>
+	<li class="layui-nav-item"><a href="aboutUs">About Us</a></li>
+	<li>
+        <ul class="layui-nav layui-bg-green layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="fansLogin">Login
+                </a>
+            </li>
+        </ul>
+    </li>
+
+	{% else %}
+	<li class="layui-nav-item"><a href="javascript:void(0);">Events</a>
+		<dl class="layui-nav-child">
+			{% if session['user_type'] == 'host'  %}
+				<dd><a href="eventsManagement">EventsManagement</a></dd>
+			{% endif %}
             <dd><a href="eventList">EventsList</a></dd>
         </dl>
 	</li>
@@ -23,18 +41,8 @@
             <dd><a href="follows">My Follows</a></dd>
         </dl>
 	</li>
+	<li class="layui-nav-item"><a href="QA">Q & A</a></li>
 	<li class="layui-nav-item"><a href="aboutUs">About Us</a></li>
-	{% if session['user_id'] == 0  %}
-		<li>
-        <ul class="layui-nav layui-bg-green layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="fansLogin">Login
-                </a>
-            </li>
-        </ul>
-    </li>
-
-	{% else %}
     <li>
         <ul class="layui-nav layui-bg-green layui-layout-right">
             <li class="layui-nav-item">

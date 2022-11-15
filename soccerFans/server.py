@@ -2,8 +2,7 @@
 
 from flask import Flask,render_template,request,redirect, abort, flash
 from flask import url_for,make_response,session,send_from_directory
-
-import uuid
+import uuid,re
 import json
 import traceback
 import time,psycopg2
@@ -64,7 +63,7 @@ def execSQL(sql):
     cursor.close()
     db.close()
 
-## query with data input
+# query with data input
 def execSQLwithData(sql, data):
     db = psycopg2.connect(database=db_name,host=host_string,port='5432',user=db_username,password=db_password,options="-c search_path=sz3029")
     cursor = db.cursor()
@@ -97,6 +96,14 @@ def hostLogin():
 
 @server.route('/eventView')
 def eventView():
+    sql = "select create_events.*,name from create_events,users where create_events.host_id = users.uid"
+    event = {}
+    r = queryOne(sql)
+    event['name'] = r[2]
+    event['description'] = r[3]
+    event['place'] = r[4]
+
+    event['host'] = r[9]
     #results = queryMany(sql)
     # follows = []
     # for r in results:
@@ -104,7 +111,7 @@ def eventView():
         # follow['user_id'] = r[0]
         # follow['name'] = r[1]
         # follows.append(follow)
-    return render_template('eventView.html')
+    return render_template('eventView.html',event=event)
 
 @server.route('/postList')
 def postList():
@@ -300,32 +307,82 @@ def postComment(post_id):
 
     return render_template('comments.html', form = form, user_id = user_id, post_id = post_id)
 
-@server.route('/follows')
-def follows():
-    #sql = "select * from follow where user_id = %s" % (str(session.get(user_id)))
-    #results = queryMany(sql)
-    # follows = []
-    # for r in results:
-        # follow = {}
-        # follow['user_id'] = r[0]
-        # follow['name'] = r[1]
-        # follows.append(follow)
-    return render_template('follows.html')
+# @server.route('/follows')
+# def follows():
+#     sql = "select * from follow where user_id = %s" % (str(session.get(user_id)))
+#     results = queryMany(sql)
+#     follows = []
+#     for r in results:
+#         follow = {}
+#         follow['user_id'] = r[0]
+#         follow['name'] = r[1]
+#         follows.append(follow)
+#     return render_template('follows.html')
 
 @server.route('/vote')
 def vote():
+    sql = "select nation from user_vote,teams where user_vote.team_id = teams.team_id and user_id = %s" % (str(session.get('user_id')))
+    result = queryMany(sql)
+    if result is None or len(result) ==0:
+        return render_template('vote.html')
+    else:
+        teams = []
+        for r in result:
+            teams.append(r[0])
+        sql = "select teams.team_id,nation,COALESCE(num,0) from teams left join (select team_id,count(*) as num from user_vote group by team_id) a on teams.team_id = a.team_id"
+        results = queryMany(sql)
+        dict_count = {}
+        for team in results:
+            dict_count[team[1]] = team[2]
+        return render_template('vote_result.html',teams=teams,dict_count = dict_count)
 
-    #exist_sql = "select count(*) from vote where user_id = %s" % (str(session.get(user_id)))
-    #result = queryOne(exist_sql)
-    return render_template('vote.html')
+@server.route('/voteTeams',  methods=['POST'])
+def voteTeams():
+    keys = list(request.form.keys())
+    for name in keys:
+        sql = "select team_id from teams where nation = '"+name+"' "
+        team_id = queryOne(sql)[0]
+        sql = "insert into user_vote(team_id,user_id) values(%s,%s)"%(team_id,str(session.get('user_id')))
+        execSQL(sql)
+    return "<script>alert('vote successfully!');window.location='vote';</script>";
+
+
+
+@server.route('/insertQuestion',  methods=['POST'])
+def insertQuesiton():
+    sql = "insert into raise_questions(uid,title,content) values(%s,'%s','%s')"%(str(session.get('user_id')),request.form['title'],request.form['content'])
+    execSQL(sql)
+    return "<script>alert('raise a question successfully!');window.location='vote';</script>";
+
+@server.route('/insertEvent',  methods=['POST'])
+def insertEvent():
+    sql = "insert into create_events(host_id,event_name,description,place,regist_fee,start_time,end_time,max_capacity) values(%s,%s,'%s','%s','%s','%s','%s','%s')"%(str(session.get('user_id')),request.form['event_name']
+        ,request.form['description'],request.form['place'],request.form['regist_fee'],request.form['start_time'],request.form['end_time'],request.form['place'])
+    execSQL(sql)
+    return "<script>alert('create an event successfully!');window.location='eventsManagement';</script>";
+
+@server.route('/raiseQuestion')
+def raiseQuestion():
+    return render_template('raiseQuestion.html')
+
 
 @server.route('/aboutUs')
 def aboutUs():
     return render_template('aboutUs.html')
 
-@server.route('/qa')
+@server.route('/QA')
 def QA():
-    return render_template('aboutUs.html')
+    sql = "select name,title,content,question_time from raise_questions,users where raise_questions.uid = users.uid"
+    questions = []
+    result = queryMany(sql)
+    for r in result:
+        question = {}
+        question['name'] = r[0]
+        question['title'] = r[1]
+        question['content'] = r[2]
+        question['question_time'] = r[3]
+        questions.append(question)
+    return render_template('Q_A.html',questions = questions)
 
 @server.route('/events')
 def events():
@@ -362,30 +419,45 @@ def eventList():
 
 @server.route('/eventsManagement')
 def eventsManagement():
-    #results = queryMany(sql)
-    # follows = []
-    # for r in results:
-        # follow = {}
-        # follow['user_id'] = r[0]
-        # follow['name'] = r[1]
-        # follows.append(follow)
-    return render_template('eventsManagement.html')
+    sql = "select event_id,event_name,name,start_time,end_time from create_events,users where create_events.host_id = users.uid"
+    events = []
+    result = queryMany(sql)
+    for r in result:
+        event = {}
+        event['event_id'] = r[0]
+        event['event_name'] = r[1]
+        event['name'] = r[2]
+        event['start_time'] = r[3]
+        event['end_time'] = r[4]
+        events.append(event)
+    return render_template('eventsManagement.html',events=events)
+
 
 @server.route('/checkFansLogin',  methods=['POST'])
 def checkFansLogin():
+    str_username = request.form['username']
+    str_password = request.form['password']
+    pattern = r"\b(and|like|exec|insert|select|drop|grant|alter|delete|update|count|chr|mid|master|truncate|char|delclare|or)\b|(\*|;)"
+    r = re.search(pattern,str_username) or re.search(pattern,str_password)
+    if r:
+        return "<script>alert('wrong!');window.location='fansLogin';</script>";
     sql = "select * from users where email = '%s' and password = '%s'" %(request.form['username'],request.form['password'])
     result = queryOne(sql)
     if result is None:
-        return "<script>alert('Wrong Account name or password!');window.location='fansLogin';</script>";
+        return "<script>alert('wrong!');window.location='fansLogin';</script>";
     else:
         session['user_id'] = result[0]
         session['name'] = result[2]
-
-        return "<script>alert('Logged In!');window.location='/';</script>";
+        session['user_type'] = result[9]
+        return "<script>alert('login successfully!');window.location='/';</script>";
 
 @server.route('/reg')
 def reg():
     return render_template('register.html')
+
+@server.route('/createEvents')
+def createEvents():
+    return render_template('createEvents.html')
 
 @server.route('/fansReg',methods=['POST'])
 def fansReg():

@@ -1,0 +1,38 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+    <div class="layui-layout layui-layout-admin">
+        {% include "fans_menu.html"  %}
+		
+        <div class="layui-form" style="width:80%;margin-left:10%;">
+            <table class="layui-table" id="mytable">
+                <thead>
+                    <tr>
+					    <th style="width:100px !important;">event_id</th>
+                        <th>title</th>
+						<th>author</th>
+                        <th>create_time</th>
+                        <th>operate</th>
+                    </tr>
+                </thead>
+                <tbody>
+					
+                    <tr>
+						<td style="width:100px !important;">1</a></td>
+                        <td >arrived at L.A.</td>
+						<td style="width:140px;">2022-11-13 12:00:00</td>
+                        <td style="width:140px;">John</td>
+                        <td style="width:200px;">
+                            <a class="layui-btn layui-btn-sm" href="2">view</a>
+                        </td>
+                    </tr>
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+    </script>
+{% endblock %}
