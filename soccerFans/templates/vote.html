@@ -1,68 +1,94 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>an interactive platform for soccer fans or potential fans</title>
-    <link rel="stylesheet" href="layui-2.6.5/src/css/layui.css">
-    <script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
-    <script src="layui-2.6.5/src/layui.js" charset="utf-8"></script>
-</head>
+﻿{% extends 'base.html' %}
+{% block content %}
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
-        {% include "fans_menu.html"  %}
-		
+
 		<h3 style="width:80%;margin-left:10%;margin-top:40px;">Please select the teams you want to vote.</h3>
 		<hr class="layui-border-cyan" style="width:80%;margin-left:10%;">
-		
-        <div class="layui-form" style="width:80%;margin-left:10%;">
-            <table class="layui-table" lay-skin="nob">
-                <tbody>
+		<form class="layui-form" action="voteTeams" method="post">
+			<div class="layui-form" style="width:80%;margin-left:10%;">
 
-                    <tr><td><input type="checkbox" name="team[German]" lay-skin="primary" title="German" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Qatar]" lay-skin="primary" title="Qatar" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[German]" lay-skin="primary" title="German" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Denmark]" lay-skin="primary" title="Denmark" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[France]" lay-skin="primary" title="France" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Spain]" lay-skin="primary" title="Spain" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[England]" lay-skin="primary" title="England" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Croatia]" lay-skin="primary" title="Croatia" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Belgium]" lay-skin="primary" title="Belgium" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Netherlands]" lay-skin="primary" title="Netherlands" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Serbia]" lay-skin="primary" title="Serbia" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Switzerland]" lay-skin="primary" title="Switzerland" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Wales]" lay-skin="primary" title="Wales" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Poland]" lay-skin="primary" title="Poland" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Canada]" lay-skin="primary" title="Canada" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Portugal]" lay-skin="primary" title="Portugal" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Mexico]" lay-skin="primary" title="Mexico" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[the United States]" lay-skin="primary" title="the United States" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Costa Rica]" lay-skin="primary" title="Costa Rica" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Japan]" lay-skin="primary" title="Japan" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[South Korea]" lay-skin="primary" title="South Korea" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Iran]" lay-skin="primary" title="Iran" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Saudi Arabia]" lay-skin="primary" title="Saudi Arabia" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Australia]" lay-skin="primary" title="Australia" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[ Senegal]" lay-skin="primary" title=" Senegal" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Morocco]" lay-skin="primary" title="Morocco" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Tunisia]" lay-skin="primary" title="Tunisia" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Cameroon]" lay-skin="primary" title="Cameroon" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Ghana]" lay-skin="primary" title="Ghana" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Brazil]" lay-skin="primary" title="Brazil" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Argentina]" lay-skin="primary" title="Argentina" checked=""></td></tr>
-					<tr><td><input type="checkbox" name="team[Uruguay and Ecuador]" lay-skin="primary" title="Uruguay and Ecuador" checked=""></td></tr>
-					
-                </tbody>
-            </table>
-        </div>
+						<h4>Group A:</h4>
+
+						<div class="group-div">
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Qatar" lay-skin="primary" title="Qatar"><img src="images/icons/qatar.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Ecuador" lay-skin="primary" title="Ecuador"><img src="images/icons/Ecuador.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Senegal" lay-skin="primary" title="Senegal"><img src="images/icons/Senegal.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Netherlands" lay-skin="primary" title="Netherlands"><img src="images/icons/qatar.png" class="team-icon"></div>
+						</div>
+						<h4>Group B:</h4>
+						<div class="group-div">
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="England" lay-skin="primary" title="England"><img src="images/icons/England.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="USA" lay-skin="primary" title="the United States"><img src="images/icons/USA.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Iran" lay-skin="primary" title="Iran"><img src="images/icons/Iran.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Wales" lay-skin="primary" title="Wales"><img src="images/icons/Wales.png" class="team-icon"></div>
+						</div>
+						<h4>Group C:</h4>
+						<div class="group-div">
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Argentina" lay-skin="primary" title="Argentina"><img src="images/icons/Argentina.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Mexico" lay-skin="primary" title="Mexico"><img src="images/icons/Mexico.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Poland" lay-skin="primary" title="Poland"><img src="images/icons/Poland.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Saudi Arabia" lay-skin="primary" title="Saudi Arabia"><img src="images/icons/Saudi Arabia.png" class="team-icon"></div>
+						</div>
+						<h4>Group D:</h4>
+						<div class="group-div">
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="France" lay-skin="primary" title="France"><img src="images/icons/France.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Australia" lay-skin="primary" title="Australia"><img src="images/icons/Australia.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Denmark" lay-skin="primary" title="Denmark"><img src="images/icons/Denmark.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Tunisia" lay-skin="primary" title="Tunisia"><img src="images/icons/Tunisia.png" class="team-icon"></div>
+						</div>
+						<h4>Group E:</h4>
+						<div class="group-div">
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Spain" lay-skin="primary" title="Spain"><img src="images/icons/Spain.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Costa Rica" lay-skin="primary" title="Costa Rica"><img src="images/icons/Costa_Rica.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="German" lay-skin="primary" title="German"><img src="images/icons/German.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Japan" lay-skin="primary" title="Japan"><img src="images/icons/Japan.png" class="team-icon"></div>
+						</div>
+						<h4>Group F:</h4>
+						<div class="group-div">
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Belgium" lay-skin="primary" title="Belgium"><img src="images/icons/Belgium.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Canada" lay-skin="primary" title="Canada"><img src="images/icons/Canada.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Morocco" lay-skin="primary" title="Morocco"><img src="images/icons/Canada.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Croatia" lay-skin="primary" title="Croatia"><img src="images/icons/Croatia.png" class="team-icon"></div>
+						</div>
+						<h4>Group G:</h4>
+						<div class="group-div">
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Brazil" lay-skin="primary" title="Brazil"><img src="images/icons/Brazil.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Switzerland" lay-skin="primary" title="Switzerland"><img src="images/icons/Brazil.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Cameroon" lay-skin="primary" title="Cameroon"><img src="images/icons/Cameroon.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Serbia" lay-skin="primary" title="Serbia"><img src="images/icons/Serbia.png" class="team-icon"></div>
+						</div>
+						<h4>Group H:</h4>
+						<div class="group-div">
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Portugal" lay-skin="primary" title="Portugal"><img src="images/icons/Portugal.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Uruguay" lay-skin="primary" title="Uruguay"><img src="images/icons/Uruguay.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Korea" lay-skin="primary" title="South Korea"><img src="images/icons/Korea.png" class="team-icon"></div>
+							<div class="team-div"><input type="checkbox" lay-filter="numCheck" name="Ghana" lay-skin="primary" title="Ghana"><img src="images/icons/Ghana.png" class="team-icon"></div>
+						</div>
+
+			</div>
+			<button class="layui-btn layui-btn-normal" style="width:200px;margin:30px;margin-left:10%;">vote</button>
+		</form>
     </div>
     <script>
         layui.use('element', function () {
             var element = layui.element;
         });
 		layui.use('form', function () {
-            var form = layui.form
+            var form = layui.form;
+
+			form.on('checkbox(numCheck)',function(data){
+				if(data.elem.checked){
+					if($('input[type=checkbox]:checked').length>3){
+						alert("At most 3 options!!!!!!");
+						$(this).prop("checked", false);
+						form.render();
+					}
+				}
+			})
+
             form.render();
         });
     </script>
-</body>
-</html>
+	</body>
+{% endblock %}

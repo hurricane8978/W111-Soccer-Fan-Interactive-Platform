@@ -1,6 +1,6 @@
 <ul class="layui-nav layui-bg-green">
     <li class="layui-nav-item"><a href="/">Home</a></li>
-	
+
 	{% if session['user_id'] == 0  %}
 	<li class="layui-nav-item"><a href="javascript:void(0);">Events</a>
 		<dl class="layui-nav-child">
@@ -20,11 +20,13 @@
 	{% else %}
 	<li class="layui-nav-item"><a href="javascript:void(0);">Events</a>
 		<dl class="layui-nav-child">
-            <dd><a href="{{ url_for('eventsManagement', uid=session['user_id']) }}">Manage Events</a></dd>
+            {% if session['user_type'] == 'host'  %}
+				<dd><a href="{{ url_for('eventsManagement', uid=session['user_id']) }}">Manage Events</a></dd>
+			{% endif %}
             <dd><a href="{{ url_for('eventList') }}">Events List</a></dd>
         </dl>
 	</li>
-	
+
     <li class="layui-nav-item"><a href="javascript:void(0);">Posts</a>
 		<dl class="layui-nav-child">
             <dd><a href="{{ url_for('myPost', uid=session['user_id']) }}">My Posts</a></dd>
@@ -33,12 +35,13 @@
 	</li>
 
 	<li class="layui-nav-item"><a href="vote">Vote</a></li>
+        <!--
 	<li class="layui-nav-item"><a href="javascript:void(0);">Follows</a>
 		<dl class="layui-nav-child">
             <dd><a href="myPost">User List</a></dd>
             <dd><a href="follows">My Follows</a></dd>
         </dl>
-	</li>
+	</li> -->
 
     <li class="layui-nav-item"><a href="javascript:void(0);">About</a>
 		<dl class="layui-nav-child">
@@ -61,5 +64,5 @@
         </ul>
     </li>
 	{%endif%}
-	
+
 </ul>
