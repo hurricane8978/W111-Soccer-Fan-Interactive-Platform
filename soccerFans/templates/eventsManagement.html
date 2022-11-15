@@ -15,6 +15,7 @@
                         <th>Description</th>
                         <th>Event Time</th>
                         <th>Capacity</th>
+                        <th>Registration Fee ($)</th>
                         <th>Operations</th>
                     </tr>
                 </thead>
@@ -26,6 +27,7 @@
                         <td style="width:140px;">{{ event[3] }}</td>
                         <td style="width:140px;">{{ event[-3] }} to {{ event[-2] }}</td>
                         <td>{{ event[-1] }}</td>
+                        <td>{{ event[5] }}</td>
                         <td style="width:200px;">
                             <div class="row">
                                 <a class="layui-btn layui-btn-sm" href="{{ url_for('eventDelete', event_id=event[0]) }}">Delete</a>

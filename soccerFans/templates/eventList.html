@@ -15,6 +15,7 @@
                         <th>Description</th>
                         <th>Event Time</th>
                         <th>Capacity</th>
+                        <th>Registration Fee ($)</th>
                         <th>Operations</th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@
                         <td style="width:140px;">{{ allevents[i][3] }}</td>
                         <td style="width:140px;">{{ allevents[i][-3] }} to {{ allevents[i][-2] }}</td>
                         <td>{{ allevents[i][-1] }}</td>
+                        <td>{{ allevents[i][5] }}</td>
                         <td style="width:200px;">
                             {% if session["user_type"] == 'host' and allevents[i][1] == session['user_id'] %}
                                 <div class="row">
@@ -58,6 +60,7 @@
                         <th>Description</th>
                         <th>Event Time</th>
                         <th>Capacity</th>
+                        <th>Registration Fee ($)</th>
                         <th>Operations</th>
                     </tr>
                 </thead>
@@ -70,6 +73,7 @@
                         <td style="width:140px;">{{ myjoined[i][3] }}</td>
                         <td style="width:140px;">{{ myjoined[i][-4] }} to {{ myjoined[i][-3] }}</td>
                         <td>{{ myjoined[i][-2] }}</td>
+                        <td>{{ myjoined[i][5] }}</td>
                         <td style="width:200px;">
                             <div class="row">
                             <a class="layui-btn layui-btn-sm" href="{{ url_for('eventDisjoint', event_id=myjoined[i][0]) }}">Dis-join</a>
